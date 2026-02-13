@@ -108,36 +108,7 @@ public class BasePage {
         return driver.getCurrentUrl();
     }
 
-    /**
-     * Vérifier si un élément existe dans le DOM (sans attendre)
-     */
-    protected boolean isElementPresent(By locator) {
-        try {
-            driver.findElement(locator);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
-    /**
-     * Attendre qu'un élément disparaisse
-     */
-    protected void waitForInvisibility(By locator) {
-        wait.waitForInvisibility(locator);
-    }
 
-    /**
-     * Attendre avec log d'erreur personnalisé
-     */
-    protected void clickWithLog(By locator, String elementName) {
-        try {
-            wait.waitForClick(locator);
-            driver.findElement(locator).click();
-            System.out.println("✅ Clicked on: " + elementName);
-        } catch (TimeoutException e) {
-            System.err.println("❌ Failed to click on: " + elementName);
-            throw new RuntimeException("Element non cliquable: " + elementName, e);
-        }
-    }
+
 }

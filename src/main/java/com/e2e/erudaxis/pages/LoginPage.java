@@ -2,6 +2,9 @@ package com.e2e.erudaxis.pages;
 
 import com.e2e.erudaxis.config.ConfigReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.Map;
 
 public class LoginPage extends BasePage {
 
@@ -12,46 +15,38 @@ public class LoginPage extends BasePage {
 
     // ========== MÉTHODES DE BASE ==========
 
-    public void enterEmail(String email) {
+    public LoginPage enterEmail(String email) {
         type(EMAIL_FIELD, email);
+        return this;
     }
 
-    public void enterPassword(String password) {
+    public LoginPage enterPassword(String password) {
         type(PASSWORD_FIELD, password);
+        return this;
     }
 
-    public void clickLogin() {
+    public DashboardPage clickLogin() {
         click(LOGIN_BUTTON);
+        return new DashboardPage();
     }
 
     // ========== MÉTHODES AVEC CONFIG ==========
 
-    /**
-     * ⭐ Saisir l'email depuis config.properties
-     */
-    public void enterValidEmail() {
-        String email = ConfigReader.get("login.email");
-        System.out.println("📧 Email : " + email);
-        enterEmail(email);
+    public LoginPage enterValidEmail() {
+        return enterEmail(ConfigReader.getValidEmail());
     }
 
-    /**
-     * ⭐ Saisir le password depuis config.properties
-     */
-    public void enterValidPassword() {
-        String password = ConfigReader.get("login.password");
-        System.out.println("🔒 Mot de passe saisi");
-        enterPassword(password);
+    public LoginPage enterValidPassword() {
+        return enterPassword(ConfigReader.getValidPassword());
     }
 
     /**
      * Login complet avec credentials de config.properties
-     * (utilisé dans CommonSteps pour le Background)
      */
-    public void loginWithValidUser() {
-        enterValidEmail();
-        enterValidPassword();
-        clickLogin();
+    public DashboardPage loginWithValidUser() {
+        enterValidEmail()
+                .enterValidPassword();
+        return clickLogin();
     }
 
     // ========== MÉTHODES DE VÉRIFICATION ==========
@@ -66,17 +61,5 @@ public class LoginPage extends BasePage {
 
     public boolean isErrorMessageDisplayed() {
         return isDisplayed(ERROR_MESSAGE);
-    }
-
-    public boolean isEmailFieldInError() {
-        String ariaInvalid = driver.findElement(EMAIL_FIELD)
-                .getAttribute("aria-invalid");
-        return "true".equalsIgnoreCase(ariaInvalid);
-    }
-
-    public boolean isPasswordFieldInError() {
-        String ariaInvalid = driver.findElement(PASSWORD_FIELD)
-                .getAttribute("aria-invalid");
-        return "true".equalsIgnoreCase(ariaInvalid);
     }
 }

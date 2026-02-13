@@ -32,11 +32,5 @@ public class DashboardPage extends BasePage {
         }
     }
 
-    /**
-     * Attendre que le dashboard soit complètement chargé
-     */
-    public void waitForDashboardToLoad() {
-        waitForUrlContains(DASHBOARD_URL);
-        System.out.println("✅ Dashboard chargé");
-    }
+
 }
