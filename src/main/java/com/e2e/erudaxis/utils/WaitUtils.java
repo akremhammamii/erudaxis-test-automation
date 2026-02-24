@@ -2,18 +2,22 @@ package com.e2e.erudaxis.utils;
 
 import com.e2e.erudaxis.config.ConfigReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Objects;
 
 public class WaitUtils {
 
+    private final WebDriver driver;
     private final WebDriverWait wait;
 
-    public WaitUtils() {
-        wait = new WebDriverWait(
-                DriverManager.getDriver(),
+    public WaitUtils(WebDriver driver) {
+        this.driver = Objects.requireNonNull(driver, "driver must not be null");
+        this.wait = new WebDriverWait(
+                driver,
                 Duration.ofSeconds(ConfigReader.getTimeout())
         );
     }
@@ -32,6 +36,17 @@ public class WaitUtils {
 
     public void waitForUrlContains(String partialUrl) {
         wait.until(ExpectedConditions.urlContains(partialUrl));
+    }
+
+    public void waitForUrlContainsOrVisibility(String partialUrl, By locator, int timeoutSeconds) {
+        WebDriverWait customWait = new WebDriverWait(
+                driver,
+                Duration.ofSeconds(timeoutSeconds)
+        );
+        customWait.until(ExpectedConditions.or(
+                ExpectedConditions.urlContains(partialUrl),
+                ExpectedConditions.visibilityOfElementLocated(locator)
+        ));
     }
 
     // ⭐ NOUVELLES MÉTHODES pour gérer le pop-up
@@ -56,7 +71,7 @@ public class WaitUtils {
      */
     public void waitForVisibility(By locator, int timeoutSeconds) {
         WebDriverWait customWait = new WebDriverWait(
-                DriverManager.getDriver(),
+                driver,
                 Duration.ofSeconds(timeoutSeconds)
         );
         customWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -74,7 +89,7 @@ public class WaitUtils {
      */
     public void waitForUrlContains(String partialUrl, int timeoutSeconds) {
         WebDriverWait customWait = new WebDriverWait(
-                DriverManager.getDriver(),
+                driver,
                 Duration.ofSeconds(timeoutSeconds)
         );
         customWait.until(ExpectedConditions.urlContains(partialUrl));

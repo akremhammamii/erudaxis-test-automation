@@ -1,9 +1,13 @@
 package com.e2e.erudaxis.pages;
 
+import com.e2e.erudaxis.config.ConfigReader;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DashboardPage extends BasePage {
 
+    private static final Logger logger = LoggerFactory.getLogger(DashboardPage.class);
     private static final String DASHBOARD_URL = "/dashboards/default";
     private static final By DASHBOARD_CONTAINER = By.cssSelector(
             "[data-testid='dashboard-container'], .dashboard-container, main[role='main']"
@@ -15,19 +19,24 @@ public class DashboardPage extends BasePage {
     public boolean isDisplayed() {
         try {
             // Attendre jusqu'à 15 secondes que l'URL contienne "dashboard"
-            System.out.println("⏳ Attente de la redirection vers le dashboard...");
-            waitForUrlContains(DASHBOARD_URL);
+            logger.info("Waiting for redirect to dashboard...");
+            getWait().waitForUrlContainsOrVisibility(
+                    DASHBOARD_URL,
+                    DASHBOARD_CONTAINER,
+                    ConfigReader.getDashboardTimeout()
+            );
 
-            String currentUrl = driver.getCurrentUrl();
+            boolean containerDisplayed = isDisplayedNow(DASHBOARD_CONTAINER);
+            String currentUrl = getDriver().getCurrentUrl();
             boolean urlContainsDashboard = currentUrl.contains(DASHBOARD_URL);
 
-            System.out.println("📍 URL actuelle : " + currentUrl);
-            System.out.println("✅ URL contient 'dashboard' : " + urlContainsDashboard);
+            logger.debug("Current URL: {}", currentUrl);
+            logger.debug("URL contains dashboard: {}", urlContainsDashboard);
 
-            return urlContainsDashboard;
+            return containerDisplayed || urlContainsDashboard;
         } catch (Exception e) {
-            System.err.println("❌ Erreur lors de la vérification du dashboard");
-            System.err.println("📍 URL actuelle : " + driver.getCurrentUrl());
+            logger.error("Error while checking dashboard display", e);
+            logger.debug("Current URL: {}", getDriver().getCurrentUrl());
             return false;
         }
     }

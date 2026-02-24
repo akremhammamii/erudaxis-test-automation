@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
+
 /**
  * DriverManager : Gestionnaire centralisé du WebDriver
  * Utilise ThreadLocal pour garantir la thread-safety en tests parallèles
@@ -34,7 +35,6 @@ public class DriverManager {
      * Initialise le WebDriver selon la configuration.
      * - Récupère le navigateur depuis config.properties
      * - Configure les options (headless, window size, etc.)
-     * - Applique les timeouts implicites
      *
      * @throws RuntimeException si le navigateur configuré n'est pas supporté
      */
@@ -58,9 +58,13 @@ public class DriverManager {
 
         // Configurer les timeouts
         getDriver().manage().window().maximize();
-        getDriver().manage().timeouts()
-                .implicitlyWait(Duration.ofSeconds(timeout));
-
+// ✅ Configurer les timeouts
+        getDriver().manage().timeouts().pageLoadTimeout(
+                Duration.ofSeconds(ConfigReader.getTimeout())
+        );
+        getDriver().manage().timeouts().scriptTimeout(
+                Duration.ofSeconds(30)
+        );
         logger.info("✅ WebDriver initialisé avec succès");
     }
 

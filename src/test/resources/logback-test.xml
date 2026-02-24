@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- ========================================
+         PROPRIÉTÉS
+         ======================================== -->
+
+    <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} [%-5level] %logger{36} - %msg%n" />
+    <property name="LOG_FILE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n" />
+
+    <!-- ========================================
+         APPENDERS - Console
+         ======================================== -->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- Filtrer les logs de niveau INFO et au-dessus pour la console -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- ========================================
+         APPENDERS - Fichiers
+         ======================================== -->
+
+    <!-- Fichier principal avec rotation quotidienne -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>target/logs/tests.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Rotation quotidienne -->
+            <fileNamePattern>target/logs/tests-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Garder 7 jours d'historique -->
+            <maxHistory>7</maxHistory>
+            <!-- Taille max totale : 500MB -->
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_FILE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- Fichier DEBUG - tous les logs détaillés -->
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>target/logs/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>target/logs/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>3</maxHistory>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_FILE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- Accepter tous les niveaux -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <!-- Fichier ERREUR uniquement -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>target/logs/errors.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>target/logs/errors-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_FILE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- Seulement les erreurs -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- ========================================
+         LOGGERS - Configuration par package
+         ======================================== -->
+
+    <!-- Root logger - niveau par défaut -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ROLLING_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+
+    <!-- Vos packages - niveau DEBUG pour développement -->
+    <logger name="com.e2e.erudaxis" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ROLLING_FILE" />
+        <appender-ref ref="DEBUG_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+    </logger>
+
+    <!-- Pages - INFO uniquement (pas de DEBUG pour éviter trop de logs) -->
+    <logger name="com.e2e.erudaxis.pages" level="INFO" />
+
+    <!-- Steps - INFO -->
+    <logger name="com.e2e.erudaxis.stepdefinitions" level="INFO" />
+
+    <!-- Hooks - INFO -->
+    <logger name="com.e2e.erudaxis.hooks" level="INFO" />
+
+    <!-- Utils - DEBUG (utile pour le debugging) -->
+    <logger name="com.e2e.erudaxis.utils" level="DEBUG" />
+
+    <!-- ========================================
+         Bibliothèques externes - Réduire le bruit
+         ======================================== -->
+
+    <!-- WebDriverManager - Seulement les erreurs -->
+    <logger name="io.github.bonigarcia.wdm" level="ERROR" />
+
+    <!-- Selenium - Avertissements et erreurs -->
+    <logger name="org.openqa.selenium" level="WARN" />
+    <logger name="org.openqa.selenium.remote" level="WARN" />
+
+    <!-- Cucumber - INFO -->
+    <logger name="io.cucumber" level="INFO" />
+
+    <!-- HTTP Client - WARN -->
+    <logger name="org.apache.http" level="WARN" />
+
+    <!-- Netty (utilisé par Selenium) - WARN -->
+    <logger name="io.netty" level="WARN" />
+
+    <!-- Réduire le bruit des frameworks -->
+    <logger name="org.junit" level="WARN" />
+    <logger name="io.cucumber.core.runner" level="WARN" />
+    <logger name="org.apache.maven.surefire" level="WARN" />
+
+
+</configuration>

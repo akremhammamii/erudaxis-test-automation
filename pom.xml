@@ -18,21 +18,69 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Dependencies Versions -->
-        <selenium.version>4.15.0</selenium.version>
-        <webdrivermanager.version>5.6.3</webdrivermanager.version>
+        <selenium.version>4.40.0</selenium.version>
+        <webdrivermanager.version>6.3.3</webdrivermanager.version>
         <cucumber.version>7.20.1</cucumber.version>
         <junit.version>5.11.0</junit.version>
         <allure.version>2.29.0</allure.version>
         <aspectj.version>1.9.22.1</aspectj.version>
         <slf4j.version>2.0.16</slf4j.version>
+        <logback.version>1.5.32</logback.version>
 
         <!-- Plugin Versions -->
         <maven.compiler.plugin>3.13.0</maven.compiler.plugin>
         <maven.surefire.plugin>3.2.5</maven.surefire.plugin>
         <allure.maven.plugin>2.14.0</allure.maven.plugin>
     </properties>
+
+    <!-- ========================================== -->
+    <!-- DEPENDENCY MANAGEMENT (CVE fixes)          -->
+    <!-- ========================================== -->
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <!-- CVE-2024-47554 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.17.0</version>
+            </dependency>
+
+            <!-- CVE-2024-25710, CVE-2024-26308 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>1.27.1</version>
+            </dependency>
+
+            <!-- CVE-2024-29857, CVE-2024-30171, CVE-2024-30172, CVE-2024-34447 -->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk18on</artifactId>
+                <version>1.79</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk18on</artifactId>
+                <version>1.79</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -46,7 +94,7 @@
         </dependency>
 
         <!-- ========================================== -->
-        <!-- WebDriverManager (Gestion automatique drivers) -->
+        <!-- WebDriverManager                           -->
         <!-- ========================================== -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -68,22 +116,22 @@
             </exclusions>
         </dependency>
 
-        <!-- Jackson mise à jour pour corriger CVEs -->
+        <!-- Jackson mis à jour (CVE fix) -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.16.0</version>
         </dependency>
 
-        <!-- Commons Lang3 mise à jour -->
+        <!-- Commons Lang3 mis à jour -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.14.0</version>
+            <version>3.18.0</version>
         </dependency>
 
         <!-- ========================================== -->
-        <!-- CUCUMBER (BDD Framework)                   -->
+        <!-- CUCUMBER                                   -->
         <!-- ========================================== -->
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -98,7 +146,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Dependency Injection pour Cucumber -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
@@ -107,7 +154,7 @@
         </dependency>
 
         <!-- ========================================== -->
-        <!-- JUNIT 5 (Test Framework)                   -->
+        <!-- JUNIT 5                                    -->
         <!-- ========================================== -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -133,12 +180,17 @@
         </dependency>
 
         <!-- ========================================== -->
-        <!-- LOGGING (SLF4J Simple)                     -->
+        <!-- LOGGING                                    -->
         <!-- ========================================== -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
         </dependency>
 
     </dependencies>
@@ -161,7 +213,7 @@
             </plugin>
 
             <!-- ========================================== -->
-            <!-- MAVEN SUREFIRE PLUGIN (Test Execution)     -->
+            <!-- MAVEN SUREFIRE PLUGIN                      -->
             <!-- ========================================== -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -169,8 +221,22 @@
                 <version>${maven.surefire.plugin}</version>
                 <configuration>
                     <testFailureIgnore>false</testFailureIgnore>
+                    <trimStackTrace>true</trimStackTrace>
 
-                    <!-- Configuration Cucumber -->
+                    <!--
+                        IMPORTANT : Un seul argLine qui combine
+                        encodage UTF-8 + AspectJ weaver pour Allure.
+                        Deux balises argLine séparées = la seconde
+                        écrase la première, ce qui cassait l'encodage.
+                    -->
+                    <argLine>
+                        -Dfile.encoding=UTF-8
+                        -Dstdout.encoding=UTF-8
+                        -Dstderr.encoding=UTF-8
+                        -Djava.util.logging.config.file="${project.basedir}/src/test/resources/logging.properties"
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+
                     <properties>
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
@@ -179,18 +245,13 @@
                         </configurationParameters>
                     </properties>
 
-                    <!-- AspectJ Weaver pour Allure -->
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
-
-                    <!-- Répertoire des résultats Allure -->
                     <systemPropertyVariables>
-                        <allure.results.directory>${project.basedir}/test-output/allure-results</allure.results.directory>
+                        <allure.results.directory>
+                            ${project.basedir}/test-output/allure-results
+                        </allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
 
-                <!-- Dépendance AspectJ pour Allure -->
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
@@ -201,7 +262,7 @@
             </plugin>
 
             <!-- ========================================== -->
-            <!-- ALLURE MAVEN PLUGIN (Report Generation)    -->
+            <!-- ALLURE MAVEN PLUGIN                        -->
             <!-- ========================================== -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
@@ -209,8 +270,12 @@
                 <version>${allure.maven.plugin}</version>
                 <configuration>
                     <reportVersion>${allure.version}</reportVersion>
-                    <resultsDirectory>${project.basedir}/test-output/allure-results</resultsDirectory>
-                    <reportDirectory>${project.basedir}/test-output/allure-report</reportDirectory>
+                    <resultsDirectory>
+                        ${project.basedir}/test-output/allure-results
+                    </resultsDirectory>
+                    <reportDirectory>
+                        ${project.basedir}/test-output/allure-report
+                    </reportDirectory>
                 </configuration>
             </plugin>
 

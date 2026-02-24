@@ -4,7 +4,7 @@
 
 base.url=https://staging.erudaxis.com/
 browser=chrome
-timeout.seconds=60
+timeout.seconds=15
 headless=false
 
 # REMPLACER PAR VOS VRAIES VALEURS

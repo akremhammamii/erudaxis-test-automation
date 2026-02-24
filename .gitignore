@@ -75,6 +75,7 @@ build/
 # Log files
 *.log
 logs/
+target/logs/
 
 # Test Reports
 cucumber-reports/
@@ -193,3 +194,4 @@ env/
 # Excel test data (décommenter si vous voulez versionner les données de test)
 # *.xlsx
 # *.xls
+

@@ -4,6 +4,8 @@ import com.e2e.erudaxis.pages.DashboardPage;
 import com.e2e.erudaxis.pages.DepartmentSelectionPage;
 import com.e2e.erudaxis.pages.LoginPage;
 import io.cucumber.java.en.Given;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
      */
     public class CommonSteps {
 
+        private static final Logger logger = LoggerFactory.getLogger(CommonSteps.class);
         private final LoginPage loginPage = new LoginPage();
         private final DepartmentSelectionPage departmentPage = new DepartmentSelectionPage();
         private final DashboardPage dashboardPage = new DashboardPage();
@@ -23,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
          */
         @Given("I am logged in as a valid user")
         public void i_am_logged_in_as_a_valid_user() {
-            System.out.println("🔐 Authentification automatique...");
+            logger.info("Automatic authentication...");
 
             // Login complet avec credentials de config.properties
             loginPage.loginWithValidUser();
@@ -37,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
             assertTrue(dashboardPage.isDisplayed(),
                     "Le dashboard devrait être affiché");
 
-            System.out.println("✅ Authentification réussie");
+            logger.info("Authentication successful");
         }
     }
 
