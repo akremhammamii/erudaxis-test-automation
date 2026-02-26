@@ -3,6 +3,7 @@ package com.e2e.erudaxis.pages;
 import com.e2e.erudaxis.utils.DriverManager;
 import com.e2e.erudaxis.utils.WaitUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -156,7 +157,85 @@ public class BasePage {
         return getDriver().getCurrentUrl();
     }
 
+    // ========== JAVASCRIPT EXECUTOR METHODS ==========
 
+    /**
+     * Exécute un script JavaScript dans le contexte du navigateur.
+     *
+     * @param script Le code JavaScript à exécuter
+     * @param args   Arguments à passer au script
+     * @return Le résultat du script
+     */
+    protected Object executeScript(String script, Object... args) {
+        try {
+            logger.debug("Executing JavaScript script");
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            Object result = js.executeScript(script, args);
+            logger.debug("Script executed successfully");
+            return result;
+        } catch (Exception e) {
+            logger.error("Failed to execute JavaScript: {}", e.getMessage());
+            throw new RuntimeException("JavaScript execution failed", e);
+        }
+    }
 
+    /**
+     * Scroll jusqu'à un élément en le centrant dans la viewport.
+     * Utile pour les éléments en bas de page ou masqués.
+     *
+     * @param locator Le locateur de l'élément à scroller vers
+     */
+    protected void scrollToElement(By locator) {
+        try {
+            logger.debug("Scrolling to element: {}", locator);
+            getWait().waitForPresence(locator);
+            WebElement element = getDriver().findElement(locator);
+            executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+            logger.debug("Scrolled to element successfully");
+        } catch (Exception e) {
+            logger.warn("Failed to scroll to element: {}", e.getMessage());
+        }
+    }
 
+    /**
+     * Déclenche un événement JavaScript pour les frameworks React/Angular.
+     * Nécessaire car sendKeys() ne déclenche pas toujours les événements attendus.
+     *
+     * @param locator     Le locateur de l'élément
+     * @param eventType   Le type d'événement (ex: 'input', 'change', 'focus')
+     */
+    protected void triggerEvent(By locator, String eventType) {
+        try {
+            logger.debug("Triggering '{}' event for element: {}", eventType, locator);
+            getWait().waitForPresence(locator);
+            WebElement element = getDriver().findElement(locator);
+            String script = String.format(
+                "arguments[0].dispatchEvent(new Event('%s', { bubbles: true, cancelable: true }));",
+                eventType
+            );
+            executeScript(script, element);
+            logger.debug("Event '{}' triggered successfully", eventType);
+        } catch (Exception e) {
+            logger.warn("Failed to trigger event: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Récupère la valeur d'un attribut d'un élément.
+     *
+     * @param locator         Le locateur de l'élément
+     * @param attributeName   Le nom de l'attribut
+     * @return La valeur de l'attribut, ou null si absent
+     */
+    protected String getAttribute(By locator, String attributeName) {
+        try {
+            getWait().waitForPresence(locator);
+            String value = getDriver().findElement(locator).getAttribute(attributeName);
+            logger.debug("Attribute '{}' = '{}'", attributeName, value);
+            return value;
+        } catch (TimeoutException e) {
+            logger.warn("Element not found for getAttribute: {}", locator);
+            return null;
+        }
+    }
 }

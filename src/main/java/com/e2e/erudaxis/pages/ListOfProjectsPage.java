@@ -168,8 +168,36 @@ public class ListOfProjectsPage extends BasePage {
 
     public ListOfProjectsPage clickToggleFilters() {
         logger.info("Toggling filters panel");
-        click(TOGGLE_FILTERS_BUTTON);
+        clickWithRetry(TOGGLE_FILTERS_BUTTON, "toggle filters");
         return this;
+    }
+
+    private void clickWithRetry(By locator, String elementName) {
+        RuntimeException lastFailure = null;
+        int maxAttempts = 3;
+
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                getWait().waitForVisibility(locator);
+                scrollToElement(locator);
+                getDriver().findElement(locator).click();
+                return;
+            } catch (ElementClickInterceptedException | StaleElementReferenceException e) {
+                logger.warn("{} click attempt {} failed: {}", elementName, attempt, e.getClass().getSimpleName());
+                lastFailure = new RuntimeException("Failed to click " + elementName, e);
+            }
+        }
+
+        logger.warn("Falling back to JavaScript click for {}", elementName);
+        try {
+            WebElement element = getDriver().findElement(locator);
+            executeScript("arguments[0].click();", element);
+        } catch (Exception e) {
+            if (lastFailure != null) {
+                throw lastFailure;
+            }
+            throw e;
+        }
     }
 
     public ListOfProjectsPage selectResponsableFilter(String responsable) {
@@ -187,10 +215,11 @@ public class ListOfProjectsPage extends BasePage {
     public ListOfProjectsPage resetFilters() {
         logger.info("Resetting all filters");
         getWait().waitForVisibility(RESET_FILTERS_BUTTON);
-        click(RESET_FILTERS_BUTTON);
+        clickWithRetry(RESET_FILTERS_BUTTON, "reset filters");
         // Attendre que le chip "filtre actif" disparaisse
         By activeFilterChip = By.xpath("//*[contains(@class,'MuiChip') and contains(.,'filtre actif')]");
-        new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+        // ✅ FIX CRITIQUE : Utiliser ConfigReader.getTimeout() pour le timeout
+        new WebDriverWait(getDriver(), Duration.ofSeconds(ConfigReader.getTimeout()))
                 .until(ExpectedConditions.invisibilityOfElementLocated(activeFilterChip));
         // Le champ titre n'est pas réinitialisé par l'app → on le vide manuellement
         clearSearch();
@@ -200,7 +229,8 @@ public class ListOfProjectsPage extends BasePage {
     public boolean isResponsableFilterReset(String expectedPlaceholder) {
         getWait().waitForVisibility(RESPONSABLE_FILTER);
         // Attendre explicitement que la valeur du champ devienne vide
-        new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+        // ✅ FIX CRITIQUE : Utiliser ConfigReader.getTimeout() pour le timeout
+        new WebDriverWait(getDriver(), Duration.ofSeconds(ConfigReader.getTimeout()))
                 .until(driver -> {
                     String value = driver.findElement(RESPONSABLE_FILTER).getAttribute("value");
                     return value == null || value.isEmpty();
@@ -337,7 +367,8 @@ public class ListOfProjectsPage extends BasePage {
         if (isDisplayedNow(SWAL2_OK_BUTTON)) {
             click(SWAL2_OK_BUTTON);
             // Attendre que le dialog disparaisse complètement avant de continuer
-            new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+            // ✅ FIX CRITIQUE : Utiliser ConfigReader.getTimeout() pour le timeout
+            new WebDriverWait(getDriver(), Duration.ofSeconds(ConfigReader.getTimeout()))
                     .until(ExpectedConditions.invisibilityOfElementLocated(SWAL2_CONTAINER));
         }
         return this;
@@ -370,7 +401,6 @@ public class ListOfProjectsPage extends BasePage {
 
         // Effacer et remplir via JavaScript pour déclencher l'onChange de React
         WebElement searchField = getDriver().findElement(SEARCH_FIELD);
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
         // Simuler focus + clear + input pour React
         searchField.click();
@@ -378,11 +408,8 @@ public class ListOfProjectsPage extends BasePage {
         searchField.sendKeys(Keys.DELETE);
         searchField.sendKeys(projectTitle);
 
-        // Déclencher explicitement l'événement input pour React
-        js.executeScript(
-                "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
-                searchField
-        );
+        // ✅ FIX : Utiliser la méthode centralisée au lieu de JavascriptExecutor direct
+        triggerEvent(SEARCH_FIELD, "input");
 
         logger.info("[DEBUG] Valeur saisie dans la recherche: '{}'",
                 searchField.getAttribute("value"));
@@ -393,7 +420,7 @@ public class ListOfProjectsPage extends BasePage {
         );
 
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(10))
+            new WebDriverWait(getDriver(), Duration.ofSeconds(ConfigReader.getTimeout()))
                     .until(ExpectedConditions.visibilityOfElementLocated(projectRowContains));
             logger.info("[DEBUG] Projet '{}' trouvé dans les résultats", projectTitle);
             return true;

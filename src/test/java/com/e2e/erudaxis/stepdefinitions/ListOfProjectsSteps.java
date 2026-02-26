@@ -1,5 +1,6 @@
 package com.e2e.erudaxis.stepdefinitions;
 
+import com.e2e.erudaxis.config.ConfigReader;
 import com.e2e.erudaxis.pages.ListOfProjectsPage;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -8,6 +9,8 @@ import io.cucumber.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ListOfProjectsSteps {
 
     private static final Logger logger = LoggerFactory.getLogger(ListOfProjectsSteps.class);
+    private static final DateTimeFormatter TITLE_SUFFIX_FORMAT =
+            DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
     private final ListOfProjectsPage projectsPage = new ListOfProjectsPage();
+    private String requestedProjectTitle;
+    private String createdProjectTitle;
 
     // ==========================================================
     // NAVIGATION
@@ -48,7 +56,7 @@ public class ListOfProjectsSteps {
     @Then("I should see the project {string} in the results")
     public void i_should_see_the_project_in_the_results(String projectTitle) {
         logger.info("Checking project in results: {}", projectTitle);
-        assertTrue(projectsPage.isProjectInResults(projectTitle),
+        assertTrue(projectsPage.isProjectInResultsAfterSearch(projectTitle),
                 "Le projet devrait être visible dans les résultats de recherche");
     }
 
@@ -74,6 +82,7 @@ public class ListOfProjectsSteps {
                 projectsPage.submitProjectForm();
                 break;
             default:
+                logger.error("❌ Bouton inconnu : {}", buttonName);
                 throw new IllegalArgumentException("Bouton inconnu : " + buttonName);
         }
     }
@@ -92,10 +101,8 @@ public class ListOfProjectsSteps {
     public void i_have_selected_a_responsable_in_the_filter() {
         logger.info("Opening filters and pre-selecting a responsable");
         projectsPage.clickToggleFilters();
-        // ✅ Sélectionner réellement un responsable depuis la config
-        projectsPage.selectResponsableFilter(
-                com.e2e.erudaxis.config.ConfigReader.getValidEmail()
-        );
+        // ✅ Sélectionner réellement un responsable depuis la config (import utilisé)
+        projectsPage.selectResponsableFilter(ConfigReader.getValidEmail());
     }
 
     // ==========================================================
@@ -129,9 +136,10 @@ public class ListOfProjectsSteps {
 
     @Then("I should see {string} in the projects list")
     public void i_should_see_in_the_projects_list(String projectTitle) {
-        logger.info("Checking project visible in list: {}", projectTitle);
-        assertTrue(projectsPage.isProjectInResults(projectTitle),
-                "Le projet devrait être visible dans la liste : " + projectTitle);
+        String titleToCheck = resolveProjectTitle(projectTitle);
+        logger.info("Checking project visible in list: {}", titleToCheck);
+        assertTrue(projectsPage.isProjectInResultsAfterSearch(titleToCheck),
+                "Le projet devrait être visible dans la liste : " + titleToCheck);
     }
 
     // ==========================================================
@@ -144,7 +152,10 @@ public class ListOfProjectsSteps {
         Map<String, String> fields = dataTable.asMap(String.class, String.class);
 
         if (fields.containsKey("Titre de projet")) {
-            projectsPage.fillProjectTitle(fields.get("Titre de projet"));
+            requestedProjectTitle = fields.get("Titre de projet");
+            createdProjectTitle = buildUniqueProjectTitle(requestedProjectTitle);
+            logger.info("Using unique project title: {}", createdProjectTitle);
+            projectsPage.fillProjectTitle(createdProjectTitle);
         }
         if (fields.containsKey("Description")) {
             projectsPage.fillProjectDescription(fields.get("Description"));
@@ -162,6 +173,22 @@ public class ListOfProjectsSteps {
         assertTrue(actualMessage.contains(expectedMessage),
                 "Le message devrait contenir '" + expectedMessage + "' mais contient : '" + actualMessage + "'");
         projectsPage.dismissSuccessDialog(); // dismiss before next step
+    }
+
+    private String buildUniqueProjectTitle(String baseTitle) {
+        if (baseTitle == null || baseTitle.isBlank()) {
+            return baseTitle;
+        }
+        return baseTitle + " " + LocalDateTime.now().format(TITLE_SUFFIX_FORMAT);
+    }
+
+    private String resolveProjectTitle(String expectedFromFeature) {
+        if (requestedProjectTitle != null
+                && requestedProjectTitle.equals(expectedFromFeature)
+                && createdProjectTitle != null) {
+            return createdProjectTitle;
+        }
+        return expectedFromFeature;
     }
 
 

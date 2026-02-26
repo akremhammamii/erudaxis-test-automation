@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
-
 public class LoginPage extends BasePage {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
@@ -15,6 +13,31 @@ public class LoginPage extends BasePage {
     private static final By PASSWORD_FIELD = By.id("sign-in-password-input");
     private static final By LOGIN_BUTTON = By.id("sign-in-button");
     private static final By ERROR_MESSAGE = By.id("error-alert");
+
+    // ========== VÉRIFICATIONS DE PAGE ==========
+
+    /**
+     * Vérifier que l'utilisateur est sur la page de connexion.
+     * Valide l'URL et la présence des éléments clés.
+     *
+     * @return true si sur la page de connexion, false sinon
+     */
+    public boolean isOnLoginPage() {
+        try {
+            logger.debug("Verifying we are on the login page");
+            String currentUrl = getCurrentUrl();
+            boolean urlValid = currentUrl.contains("erudaxis");
+            boolean elementsPresent =
+                isDisplayed(EMAIL_FIELD) &&
+                isDisplayed(PASSWORD_FIELD) &&
+                isDisplayed(LOGIN_BUTTON);
+
+            return urlValid && elementsPresent;
+        } catch (Exception e) {
+            logger.debug("Not on login page: {}", e.getMessage());
+            return false;
+        }
+    }
 
     // ========== MÉTHODES DE BASE ==========
 

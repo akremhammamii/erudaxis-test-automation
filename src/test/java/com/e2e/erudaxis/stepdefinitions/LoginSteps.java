@@ -3,7 +3,6 @@ package com.e2e.erudaxis.stepdefinitions;
 import com.e2e.erudaxis.pages.DashboardPage;
 import com.e2e.erudaxis.pages.DepartmentSelectionPage;
 import com.e2e.erudaxis.pages.LoginPage;
-import com.e2e.erudaxis.utils.DriverManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -21,10 +20,10 @@ public class LoginSteps {
 
     @Given("I am on the login page")
     public void i_am_on_the_login_page() {
-        String currentUrl = DriverManager.getDriver().getCurrentUrl();
-        logger.info("On login page, current URL: {}", currentUrl);
-        assertTrue(currentUrl.contains("erudaxis"),
-                "Devrait être sur la page Erudaxis");
+        logger.info("Verifying user is on login page");
+        // ✅ FIX CRITIQUE : Utiliser la méthode encapsulée au lieu d'accès direct DriverManager
+        assertTrue(loginPage.isOnLoginPage(),
+                "L'utilisateur devrait être sur la page de connexion");
     }
 
     // ⭐ Step pour l'email valide

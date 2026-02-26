@@ -2,7 +2,6 @@ package com.e2e.erudaxis.pages;
 
 import com.e2e.erudaxis.config.ConfigReader;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +11,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class DepartmentSelectionPage extends BasePage {
+// ✅ FIX : Étendre BasePopup au lieu de BasePage pour réutiliser la logique des popups
+public class DepartmentSelectionPage extends BasePopup {
 
     private static final Logger logger = LoggerFactory.getLogger(DepartmentSelectionPage.class);
-    private static final By POPUP_CONTAINER = By.cssSelector("div[class*='MuiBox-root']");
 
     // Map dynamique pour gerer facilement les departements
     private static final Map<String, By> DEPARTMENTS = Map.of(
@@ -28,13 +27,11 @@ public class DepartmentSelectionPage extends BasePage {
      */
     public DepartmentSelectionPage waitForPopup() {
         logger.debug("Waiting for department selection popup...");
-        getWait().waitForVisibility(POPUP_CONTAINER);
+        // ✅ Utilise la méthode héritée de BasePopup
+        waitForPopupLoad();
         return this;
     }
 
-    public boolean isPopupDisplayed() {
-        return isDisplayed(POPUP_CONTAINER);
-    }
 
     /**
      * Cliquer sur un element avec JS (uniquement si necessaire)
@@ -51,9 +48,9 @@ public class DepartmentSelectionPage extends BasePage {
         WebElement element = elements.stream().filter(WebElement::isDisplayed).findFirst()
                 .orElseThrow(() -> new RuntimeException("Aucun element visible pour : " + elementName));
 
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
-        js.executeScript("arguments[0].click();", element);
+        // ✅ Utiliser la méthode centralisée au lieu de JavascriptExecutor direct
+        scrollToElement(locator);
+        executeScript("arguments[0].click();", element);
 
         logger.info("Clicked on department: {}", elementName);
     }

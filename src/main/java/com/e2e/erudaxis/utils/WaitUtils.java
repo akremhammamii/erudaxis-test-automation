@@ -2,17 +2,23 @@ package com.e2e.erudaxis.utils;
 
 import com.e2e.erudaxis.config.ConfigReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.logging.Logger;
 
 public class WaitUtils {
 
     private final WebDriver driver;
     private final WebDriverWait wait;
+    private static final Logger logger = Logger.getLogger(WaitUtils.class.getName());
 
     public WaitUtils(WebDriver driver) {
         this.driver = Objects.requireNonNull(driver, "driver must not be null");
@@ -49,7 +55,7 @@ public class WaitUtils {
         ));
     }
 
-    // ⭐ NOUVELLES MÉTHODES pour gérer le pop-up
+    // ⭐ NOUVELLES METHODES AJOUTÉES ⭐
 
     /**
      * Attendre qu'un élément disparaisse
@@ -66,9 +72,6 @@ public class WaitUtils {
         waitForVisibility(locator);
     }
 
-    /**
-     * Attendre avec un timeout personnalisé
-     */
     public void waitForVisibility(By locator, int timeoutSeconds) {
         WebDriverWait customWait = new WebDriverWait(
                 driver,
@@ -93,6 +96,61 @@ public class WaitUtils {
                 Duration.ofSeconds(timeoutSeconds)
         );
         customWait.until(ExpectedConditions.urlContains(partialUrl));
+    }
+
+    // =================== MÉTHODES RECOMMANDÉES ===================
+
+    public void waitForNumberOfElements(By locator, int count) {
+        wait.until(ExpectedConditions.numberOfElementsToBe(locator, count));
+    }
+
+    public void waitForAttributeValue(By locator, String attribute, String value) {
+        wait.until(d -> {
+            try {
+                String attrValue = d.findElement(locator).getAttribute(attribute);
+                return value.equals(attrValue);
+            } catch (Exception e) {
+                return false;
+            }
+        });
+    }
+
+    public void waitForTextInElement(By locator, String text) {
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+    }
+
+    public void waitForElementToBeStale(By locator) {
+        try {
+            WebElement el = driver.findElement(locator);
+            wait.until(ExpectedConditions.stalenessOf(el));
+        } catch (NoSuchElementException e) {
+            // Element not found - treated as already stale
+        }
+    }
+
+    public void waitForCustomCondition(Function<WebDriver, Boolean> condition, String description) {
+        wait.until(condition::apply);
+    }
+
+    public void waitForElementWithRetry(By locator, int maxRetries) {
+        TimeoutException lastEx = null;
+        int retries = Math.max(1, maxRetries);
+        long totalTimeout = Math.max(1, ConfigReader.getTimeout());
+        long perTryTimeout = Math.max(1, totalTimeout / retries);
+
+        for (int i = 0; i < retries; i++) {
+            try {
+                WebDriverWait retryWait = new WebDriverWait(
+                        driver,
+                        Duration.ofSeconds(perTryTimeout)
+                );
+                retryWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+                return;
+            } catch (TimeoutException e) {
+                lastEx = e;
+            }
+        }
+        if (lastEx != null) throw lastEx;
     }
 
 }

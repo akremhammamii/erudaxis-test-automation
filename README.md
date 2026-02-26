@@ -21,6 +21,7 @@ src/
 │   ├── config/              # Gestion des configurations (ConfigReader)
 │   ├── pages/               # Page Objects
 │   │   ├── BasePage.java              # Classe parent pour les pages
+│   │   ├── BasePopup.java             # Classe parent pour les popups
 │   │   ├── LoginPage.java             # Page de connexion
 │   │   ├── DashboardPage.java         # Page du dashboard
 │   │   ├── DepartmentSelectionPage.java
@@ -158,6 +159,43 @@ Feature: Login functionality
 2. Commiter vos changements
 3. Pousser vers la branche
 4. Créer une Pull Request
+
+## 🚀 Améliorations Récentes (Février 2026)
+
+### ✅ Implémentations
+
+1. **BasePopup.java** - Nouvelle classe parent pour la gestion des popups
+   - Encapsulation améliorée des popups
+   - Méthodes communes pour les modales et dialogues
+   - Gestion des événements de fermeture
+
+2. **Correction DashboardPage**
+   - `isDisplayed()` retourne maintenant `false` au lieu de lever une exception
+   - Meilleure gestion des timeouts
+
+3. **Optimisation WaitUtils**
+   - Waits explicites et implicites correctement configurés
+   - Utilisation de fluent waits pour plus de flexibilité
+   - Élimination des hard-coded delays
+
+4. **Amélioration des Step Definitions**
+   - Meilleure gestion des assertions
+   - Code plus lisible et maintenable
+   - Gestion améliorée des erreurs
+
+### 🔍 Code Review Effectué
+
+- **Page Object Model** : Vérification de la structure et de l'encapsulation
+- **Wait Strategies** : Validation des stratégies d'attente
+- **Error Handling** : Amélioration de la gestion des exceptions
+- **Naming Conventions** : Harmonisation des conventions de nommage
+- **Scalability** : Architecture préparée pour les futures expansions
+
+## 📈 Gestion du Projet
+
+### Branches
+- `main` : Version de production stable
+- `develop` : Branche de développement principal
 
 ## 📄 Licence
 
