@@ -10,6 +10,7 @@ public class DashboardPage extends BasePage {
 
     private static final Logger logger = LoggerFactory.getLogger(DashboardPage.class);
     private static final String DASHBOARD_URL = "/dashboards/default";
+
     // ✅ FIX : Utiliser un locateur plus flexible qui s'adapte mieux
     private static final By DASHBOARD_CONTAINER = By.xpath(
             "//div[contains(@class, 'dashboard')] | //main | //div[@role='main']"
@@ -43,7 +44,7 @@ public class DashboardPage extends BasePage {
         try {
             waitForDashboardLoad();
             String currentUrl = getDriver().getCurrentUrl();
-            boolean urlContainsDashboard = currentUrl.contains(DASHBOARD_URL);
+            boolean urlContainsDashboard = currentUrl != null && currentUrl.contains(DASHBOARD_URL);
             boolean containerDisplayed = isDisplayedNow(DASHBOARD_CONTAINER);
             return urlContainsDashboard || containerDisplayed;
         } catch (RuntimeException e) {

@@ -31,16 +31,39 @@ public class ListOfProjectsPage extends BasePage {
     );
 
     // ========== SEARCH ==========
+    /**
+     * Search field - Stable XPath avec fallbacks
+     *
+     * ⚠️ RATIONALE: MUI Input text, peut avoir placeholder variable
+     * Fallbacks: placeholder partial → structure div+input
+     */
     private static final By SEARCH_FIELD = By.xpath(
-            "//input[@placeholder='Titre de projet...']"
+            "//input[contains(@placeholder, 'Titre')] | " +
+            "//input[@aria-label='Rechercher'] | " +
+            "//div[contains(@class, 'MuiInputBase')]//input[@type='text'][1]"
     );
 
     // ========== FILTRES ==========
+    /**
+     * Toggle filters button - With aria-label fallback
+     *
+     * ⚠️ RATIONALE: aria-label est plus stable que text content
+     * Fallback: normalize-space() pour texte exact
+     */
     private static final By TOGGLE_FILTERS_BUTTON = By.xpath(
-            "//button[contains(., 'Afficher Filtres') or contains(., 'Masquer Filtres')]"
+            "//button[@aria-label='Filtres'] | " +
+            "//button[normalize-space()='Afficher Filtres' or normalize-space()='Masquer Filtres']"
     );
+
+    /**
+     * Responsable filter input - Avec structure fallback
+     *
+     * ⚠️ RATIONALE: MUI Autocomplete input, peut avoir placeholder variable
+     * Fallbacks: placeholder partial → MuiAutocomplete structure
+     */
     private static final By RESPONSABLE_FILTER = By.xpath(
-            "//input[@placeholder='Tous les responsables']"
+            "//input[contains(@placeholder, 'responsable')] | " +
+            "//div[contains(@class, 'MuiAutocomplete')]//input[1]"
     );
     private static final By RESET_FILTERS_BUTTON = By.xpath(
             "//button[contains(normalize-space(.),'Tout réinitialiser')]"
@@ -52,11 +75,23 @@ public class ListOfProjectsPage extends BasePage {
     private static final By ADD_PROJECT_MODAL = By.xpath(
             "//*[@role='dialog'] | //*[contains(@class,'MuiModal-root') and not(contains(@class,'MuiModal-hidden'))]");
     // ========== TABLE ==========
+    /**
+     * Table rows - Using role attribute (stable, semantic)
+     *
+     * ⚠️ RATIONALE: Évite les classes générées MUI (css-XXXXX)
+     * Uses: @role='table' + @role='row' (standard HTML5)
+     */
     private static final By TABLE_ROWS = By.xpath(
-            "//tbody[contains(@class,'MuiTableBody-root')]//tr[@role='row']");
+            "//table[@role='table']//tbody//tr[@role='row']"
+    );
+    /**
+     * Responsable cells - Using role and semantic selectors
+     *
+     * ⚠️ RATIONALE: Évite les classes générées, plus robuste
+     */
     private static final By RESPONSABLE_CELLS = By.xpath(
-            "//tbody[contains(@class,'MuiTableBody-root')]//tr[@role='row']//td[3]//div");
-
+            "//table[@role='table']//tbody//tr[@role='row']//td[3]//div"
+    );
     // ========== FORMULAIRE CRÉATION ==========
     private static final By FORM_TITLE_INPUT = By.xpath(
             "//input[@name='titre' or @placeholder='Titre De Projet']");
