@@ -1,100 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Selenium Test Dashboard</title>
-  <style>
-    :root { --bg:#0d1117; --surface:#161b22; --border:#30363d; --text:#e6edf3; --muted:#8b949e; --green:#3fb950; --red:#f85149; --blue:#58a6ff; --accent:#d2a8ff; }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); font-family:Segoe UI, Arial, sans-serif; min-height:100vh; }
-    .mono { font-family:Consolas, monospace; }
-    header { background:var(--surface); border-bottom:1px solid var(--border); padding:1.5rem 2rem; display:flex; align-items:center; gap:1rem; }
-    header h1 { font-size:1.35rem; font-weight:800; }
-    header .sub { font-size:0.8rem; color:var(--muted); font-family:Consolas, monospace; }
-    main { max-width:1200px; margin:0 auto; padding:2rem; }
-    .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
-    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
-    .card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.5rem; }
-    .label { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem; }
-    .value { font-size:2.1rem; font-weight:800; line-height:1; }
-    .sub { font-size:0.75rem; color:var(--muted); margin-top:0.3rem; }
-    .pass-card .value { color:var(--green); } .fail-card .value { color:var(--red); } .rate-card .value { color:var(--accent); }
-    .latest-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
-    .latest-row { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-    .badge { display:inline-block; padding:0.2rem 0.55rem; border-radius:4px; font-size:0.72rem; font-weight:700; }
-    .badge.pass { background:rgba(63,185,80,.15); color:var(--green); border:1px solid rgba(63,185,80,.3); }
-    .badge.fail { background:rgba(248,81,73,.15); color:var(--red); border:1px solid rgba(248,81,73,.3); }
-    .chart-wrap { width:100%; overflow:hidden; border-radius:6px; }
-    .breakdown-row { display:grid; grid-template-columns:120px 70px 1fr 50px 80px; align-items:center; gap:0.75rem; padding:0.5rem 0; border-bottom:1px solid var(--border); font-size:0.85rem; }
-    .breakdown-row:last-child { border-bottom:none; }
-    .b-bar-wrap { background:#21262d; border-radius:4px; height:6px; } .b-bar { background:var(--green); height:6px; border-radius:4px; }
-    table { width:100%; border-collapse:collapse; font-size:0.82rem; } th { text-align:left; padding:0.5rem 0.75rem; font-size:0.72rem; color:var(--muted); border-bottom:1px solid var(--border); }
-    td { padding:0.55rem 0.75rem; border-bottom:1px solid #21262d; } tr:hover td { background:#1c2128; }
-    .green { color:var(--green); font-weight:600; } .red { color:var(--red); font-weight:600; }
-    a { color:var(--blue); text-decoration:none; } a:hover { text-decoration:underline; }
-    @media (max-width:768px) { .grid4{grid-template-columns:1fr 1fr;} .grid2{grid-template-columns:1fr;} .breakdown-row{grid-template-columns:1fr 1fr;} }
-  </style>
-</head>
-<body>
-<header>
-  <div><h1>Selenium Test Dashboard</h1><div class="sub">akremhammamii/erudaxis-test-automation · Last run: 2026-03-07 14:15:18 UTC</div></div>
-</header>
-<main>
-  <div class="grid4">
-    <div class="card"><div class="label">Total Runs</div><div class="value">1</div></div>
-    <div class="card pass-card"><div class="label">Passed Runs</div><div class="value">1</div></div>
-    <div class="card fail-card"><div class="label">Failed Runs</div><div class="value">0</div></div>
-    <div class="card rate-card"><div class="label">Avg Pass Rate</div><div class="value">100%</div></div>
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard</title>
+<style>
+:root{--bg:#0a0f1f;--panel:#10182d;--panel2:#16213b;--line:#22365c;--text:#e6eefc;--muted:#90a4c7;--ok:#22c55e;--bad:#ef4444;--warn:#f59e0b;--a:#38bdf8}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:radial-gradient(900px 400px at 90% -10%,#1f3c7a55,transparent),var(--bg);color:var(--text)}
+.wrap{max-width:1260px;margin:0 auto;padding:26px}.nav{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.brand{font-weight:800;font-size:26px}.repo{color:var(--muted);font-size:12px}.tabs a{color:var(--muted);text-decoration:none;padding:7px 12px;border:1px solid var(--line);border-radius:8px}.tabs a.active{color:var(--a);border-color:var(--a)}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:14px}.lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.val{font-size:34px;font-weight:800;margin-top:4px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.latest{margin-top:12px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:12px;padding:12px;display:flex;gap:12px;flex-wrap:wrap}
+.trend{margin-top:12px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:12px}.bars{height:90px;display:flex;align-items:end;gap:4px;margin-top:8px}.tbar{flex:1;min-height:6px;background:linear-gradient(180deg,#34d399,#10b981);border-radius:4px 4px 0 0}
+.tbl{margin-top:12px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;overflow:auto}
+table{width:100%;border-collapse:collapse}th,td{padding:10px 12px;border-bottom:1px solid var(--line);font-size:13px;text-align:left}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.badge{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700}.badge.pass{background:#14532d;color:#86efac}.badge.fail{background:#7f1d1d;color:#fca5a5}
+.branch{font-family:Consolas,monospace;background:#1a2848;border:1px solid var(--line);padding:2px 6px;border-radius:6px}.mono{font-family:Consolas,monospace;color:var(--muted)}
+a{color:var(--a);text-decoration:none}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:640px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+  <div class="nav"><div><div class="brand">Test Dashboard</div><div class="repo">akremhammamii/erudaxis-test-automation | updated 2026-03-07 14:24:03 UTC</div></div><div class="tabs"><a class="active" href="index.html">Overview</a> <a href="tests.html">Test Analytics</a></div></div>
+  <div class="grid">
+    <div class="card"><div class="lbl">Total Runs</div><div class="val">2</div></div>
+    <div class="card"><div class="lbl">Passed Runs</div><div class="val ok">2</div></div>
+    <div class="card"><div class="lbl">Failed Runs</div><div class="val bad">0</div></div>
+    <div class="card"><div class="lbl">Avg Pass Rate</div><div class="val">100%</div></div>
+    <div class="card"><div class="lbl">Flaky Scenarios</div><div class="val warn">0</div></div>
   </div>
-
-  <div class="latest-card">
-    <div class="label">Latest Run</div>
-    <div class="latest-row">
-      <span class="badge pass">PASS</span>
-      <span>main</span>
-      <span>chrome, firefox</span>
-      <span class="green">14 passed</span>
-      <span class="red">0 failed</span>
-      <span>1m 10s</span>
-      <a href="https://akremhammamii.github.io/erudaxis-test-automation/" target="_blank" rel="noreferrer">Open report</a>
-    </div>
-  </div>
-
-  <div class="grid2">
-    <div class="card"><div class="label">Pass Rate Trend</div><div class="chart-wrap"><div style="color:#8b949e;font-size:12px">Not enough history for trend.</div></div></div>
-    <div class="card"><div class="label">Browser Breakdown</div>
-    <div class="breakdown-row">
-      <span class="b-icon">chrome, firefox</span>
-      <span class="b-count">1 runs</span>
-      <div class="b-bar-wrap"><div class="b-bar" style="width:100%"></div></div>
-      <span class="b-rate">100%</span>
-      <span class="b-detail">1 pass</span>
-    </div></div>
-  </div>
-
-  <div class="grid2">
-    <div class="card"><div class="label">Branch Breakdown</div>
-    <div class="breakdown-row">
-      <span class="b-icon">main</span>
-      <span class="b-count">1 runs</span>
-      <div class="b-bar-wrap"><div class="b-bar" style="width:100%"></div></div>
-      <span class="b-rate">100%</span>
-      <span class="b-detail">1 pass</span>
-    </div></div>
-    <div class="card"><div class="label">Run History</div><div style="overflow-x:auto"><table><thead><tr><th>Status</th><th>Date</th><th>Branch</th><th>Browser</th><th>Passed</th><th>Failed</th><th>Duration</th><th>Rate</th><th>Report</th></tr></thead><tbody>
-    <tr>
+  <div class="latest"><span class="badge pass">PASS</span><span>main</span><span>chrome, firefox</span><span class="ok">14 passed</span><span class="bad">0 failed</span><span class="warn">0 flaky</span><span>1m 11s</span><a href="https://akremhammamii.github.io/erudaxis-test-automation/" target="_blank" rel="noreferrer">Latest report</a></div>
+  <div class="trend"><div class="lbl">Pass Rate Trend (last 2 runs)</div><div class="bars"><div class="tbar" style="height:100%"></div><div class="tbar" style="height:100%"></div></div></div>
+  <div class="tbl"><table><thead><tr><th>Status</th><th>Date</th><th>Branch</th><th>Browser</th><th>Passed</th><th>Failed</th><th>Flaky</th><th>Duration</th><th>Rate</th><th>Report</th></tr></thead><tbody><tr>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="mono">2026-03-07 14:24:03 UTC</td>
+      <td><span class="branch">main</span></td>
+      <td>CH chrome, firefox</td>
+      <td class="ok">14</td>
+      <td class="bad">0</td>
+      <td class="warn">0</td>
+      <td>1m 11s</td>
+      <td>100%</td>
+      <td><a href="https://akremhammamii.github.io/erudaxis-test-automation/" target="_blank" rel="noreferrer">Open</a></td>
+    </tr><tr>
       <td><span class="badge pass">PASS</span></td>
       <td class="mono">2026-03-07 14:15:18 UTC</td>
-      <td>main</td>
-      <td>chrome, firefox</td>
-      <td class="green">14</td>
-      <td class="red">0</td>
-      <td>1m 10s</td>
+      <td><span class="branch">main</span></td>
+      <td>CH chrome, firefox</td>
+      <td class="ok">14</td>
+      <td class="bad">0</td>
+      <td class="warn">0</td>
+      <td>0s</td>
       <td>100%</td>
-      <td><a href="https://akremhammamii.github.io/erudaxis-test-automation/" target="_blank" rel="noreferrer">View</a></td>
-    </tr></tbody></table></div></div>
-  </div>
-</main>
-</body>
-</html>
+      <td><a href="https://akremhammamii.github.io/erudaxis-test-automation/" target="_blank" rel="noreferrer">Open</a></td>
+    </tr></tbody></table></div>
+</div></body></html>
