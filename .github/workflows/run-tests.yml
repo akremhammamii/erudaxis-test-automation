@@ -45,7 +45,7 @@ jobs:
         run: |
           echo "LOGIN_EMAIL=${{ secrets.LOGIN_EMAIL }}" >> $GITHUB_ENV
           echo "LOGIN_PASSWORD=${{ secrets.LOGIN_PASSWORD }}" >> $GITHUB_ENV
-          echo "LOGIN_DEPARTMENT=Collège" >> $GITHUB_ENV
+          echo "LOGIN_DEPARTMENT=College" >> $GITHUB_ENV
 
       - name: Run tests
         run: |
