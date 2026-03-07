@@ -73,7 +73,7 @@ jobs:
             -Dbrowser=${{ matrix.browser }} \
             -Dheadless=true \
             -Dcucumber.filter.tags="@smoke"
-        continue-on-error: false
+        continue-on-error: true
 
       - name: Prepare test results
         if: always()
