@@ -1,78 +1,100 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>QA Dashboard</title>
-<style>
-:root{--bg:#f4f7fb;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text)}
-.wrap{max-width:1200px;margin:0 auto;padding:24px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.h1{font-size:28px;font-weight:800}.sub{color:var(--muted);font-size:13px}
-.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-.l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.v{font-size:30px;font-weight:800;margin-top:4px}
-.mid{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:12px}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-.bars{height:130px;display:flex;align-items:flex-end;gap:5px;margin-top:12px}.b{flex:1;height:100%;display:flex;align-items:flex-end}.b span{width:100%;border-radius:5px 5px 0 0;display:block}
-.ring{width:110px;height:110px;border-radius:50%;position:relative;margin:8px auto 6px}.ring::after{content:"";position:absolute;inset:14px;background:#fff;border-radius:50%}
-.ringv{position:relative;z-index:2;text-align:center;margin-top:-78px;font-weight:800;font-size:22px}
-.table{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:auto}
-table{width:100%;border-collapse:collapse}th,td{padding:10px 12px;border-bottom:1px solid var(--line);font-size:13px;text-align:left}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-tr:last-child td{border-bottom:none}.badge{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}.ok{background:#dcfce7;color:#166534}.ko{background:#fee2e2;color:#991b1b}.na{background:#e2e8f0;color:#475569}
-@media(max-width:1000px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.mid{grid-template-columns:1fr}}
-@media(max-width:640px){.cards{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Selenium Test Dashboard</title>
+  <style>
+    :root { --bg:#0d1117; --surface:#161b22; --border:#30363d; --text:#e6edf3; --muted:#8b949e; --green:#3fb950; --red:#f85149; --blue:#58a6ff; --accent:#d2a8ff; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:Segoe UI, Arial, sans-serif; min-height:100vh; }
+    .mono { font-family:Consolas, monospace; }
+    header { background:var(--surface); border-bottom:1px solid var(--border); padding:1.5rem 2rem; display:flex; align-items:center; gap:1rem; }
+    header h1 { font-size:1.35rem; font-weight:800; }
+    header .sub { font-size:0.8rem; color:var(--muted); font-family:Consolas, monospace; }
+    main { max-width:1200px; margin:0 auto; padding:2rem; }
+    .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.5rem; }
+    .label { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem; }
+    .value { font-size:2.1rem; font-weight:800; line-height:1; }
+    .sub { font-size:0.75rem; color:var(--muted); margin-top:0.3rem; }
+    .pass-card .value { color:var(--green); } .fail-card .value { color:var(--red); } .rate-card .value { color:var(--accent); }
+    .latest-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
+    .latest-row { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .badge { display:inline-block; padding:0.2rem 0.55rem; border-radius:4px; font-size:0.72rem; font-weight:700; }
+    .badge.pass { background:rgba(63,185,80,.15); color:var(--green); border:1px solid rgba(63,185,80,.3); }
+    .badge.fail { background:rgba(248,81,73,.15); color:var(--red); border:1px solid rgba(248,81,73,.3); }
+    .chart-wrap { width:100%; overflow:hidden; border-radius:6px; }
+    .breakdown-row { display:grid; grid-template-columns:120px 70px 1fr 50px 80px; align-items:center; gap:0.75rem; padding:0.5rem 0; border-bottom:1px solid var(--border); font-size:0.85rem; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .b-bar-wrap { background:#21262d; border-radius:4px; height:6px; } .b-bar { background:var(--green); height:6px; border-radius:4px; }
+    table { width:100%; border-collapse:collapse; font-size:0.82rem; } th { text-align:left; padding:0.5rem 0.75rem; font-size:0.72rem; color:var(--muted); border-bottom:1px solid var(--border); }
+    td { padding:0.55rem 0.75rem; border-bottom:1px solid #21262d; } tr:hover td { background:#1c2128; }
+    .green { color:var(--green); font-weight:600; } .red { color:var(--red); font-weight:600; }
+    a { color:var(--blue); text-decoration:none; } a:hover { text-decoration:underline; }
+    @media (max-width:768px) { .grid4{grid-template-columns:1fr 1fr;} .grid2{grid-template-columns:1fr;} .breakdown-row{grid-template-columns:1fr 1fr;} }
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top">
-    <div><div class="h1">Test Execution Dashboard</div><div class="sub">Selenium + Cucumber + GitHub Actions</div></div>
-    <div class="sub">Updated: 07/03/2026 14:10</div>
+<header>
+  <div><h1>Selenium Test Dashboard</h1><div class="sub">akremhammamii/erudaxis-test-automation · Last run: 2026-03-07 14:15:18 UTC</div></div>
+</header>
+<main>
+  <div class="grid4">
+    <div class="card"><div class="label">Total Runs</div><div class="value">1</div></div>
+    <div class="card pass-card"><div class="label">Passed Runs</div><div class="value">1</div></div>
+    <div class="card fail-card"><div class="label">Failed Runs</div><div class="value">0</div></div>
+    <div class="card rate-card"><div class="label">Avg Pass Rate</div><div class="value">100%</div></div>
   </div>
 
-  <div class="cards">
-    <div class="card"><div class="l">Total Runs</div><div class="v">2</div></div>
-    <div class="card"><div class="l">Average Pass Rate</div><div class="v">100%</div></div>
-    <div class="card"><div class="l">Latest Pass Rate</div><div class="v">100%</div></div>
-    <div class="card"><div class="l">Latest Passed</div><div class="v">14</div></div>
-    <div class="card"><div class="l">Latest Failed</div><div class="v">0</div></div>
-  </div>
-
-  <div class="mid">
-    <div class="panel">
-      <div class="l">Pass Rate Trend (Last 2 runs)</div>
-      <div class="bars"><div class="b"><span style="height:100%;background:#16a34a"></span></div><div class="b"><span style="height:100%;background:#16a34a"></span></div></div>
-    </div>
-    <div class="panel" style="text-align:center">
-      <div class="l">Latest Quality</div>
-      <div class="ring" style="background:conic-gradient(#16a34a 0 100%, #e5e7eb 100% 100%);"></div>
-      <div class="ringv">100%</div>
-      <div class="sub">Browsers: Chrome, Firefox</div>
+  <div class="latest-card">
+    <div class="label">Latest Run</div>
+    <div class="latest-row">
+      <span class="badge pass">PASS</span>
+      <span>main</span>
+      <span>chrome, firefox</span>
+      <span class="green">14 passed</span>
+      <span class="red">0 failed</span>
+      <span>1m 10s</span>
+      <a href="https://akremhammamii.github.io/erudaxis-test-automation/" target="_blank" rel="noreferrer">Open report</a>
     </div>
   </div>
 
-  <div class="table">
-    <table>
-      <thead><tr><th>Run</th><th>Date</th><th>Status</th><th>Pass Rate</th><th>Passed/Total</th><th>Browsers</th></tr></thead>
-      <tbody><tr>
-      <td>#2</td>
-      <td>07/03/2026 14:10</td>
-      <td><span class="badge ok">SUCCESS</span></td>
-      <td>100%</td>
-      <td>14/14</td>
-      <td>Chrome, Firefox</td>
-    </tr><tr>
-      <td>#1</td>
-      <td>07/03/2026 14:00</td>
-      <td><span class="badge ok">SUCCESS</span></td>
-      <td>100%</td>
-      <td>14/14</td>
-      <td>Chrome, Firefox</td>
-    </tr></tbody>
-    </table>
+  <div class="grid2">
+    <div class="card"><div class="label">Pass Rate Trend</div><div class="chart-wrap"><div style="color:#8b949e;font-size:12px">Not enough history for trend.</div></div></div>
+    <div class="card"><div class="label">Browser Breakdown</div>
+    <div class="breakdown-row">
+      <span class="b-icon">chrome, firefox</span>
+      <span class="b-count">1 runs</span>
+      <div class="b-bar-wrap"><div class="b-bar" style="width:100%"></div></div>
+      <span class="b-rate">100%</span>
+      <span class="b-detail">1 pass</span>
+    </div></div>
   </div>
-</div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Branch Breakdown</div>
+    <div class="breakdown-row">
+      <span class="b-icon">main</span>
+      <span class="b-count">1 runs</span>
+      <div class="b-bar-wrap"><div class="b-bar" style="width:100%"></div></div>
+      <span class="b-rate">100%</span>
+      <span class="b-detail">1 pass</span>
+    </div></div>
+    <div class="card"><div class="label">Run History</div><div style="overflow-x:auto"><table><thead><tr><th>Status</th><th>Date</th><th>Branch</th><th>Browser</th><th>Passed</th><th>Failed</th><th>Duration</th><th>Rate</th><th>Report</th></tr></thead><tbody>
+    <tr>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="mono">2026-03-07 14:15:18 UTC</td>
+      <td>main</td>
+      <td>chrome, firefox</td>
+      <td class="green">14</td>
+      <td class="red">0</td>
+      <td>1m 10s</td>
+      <td>100%</td>
+      <td><a href="https://akremhammamii.github.io/erudaxis-test-automation/" target="_blank" rel="noreferrer">View</a></td>
+    </tr></tbody></table></div></div>
+  </div>
+</main>
 </body>
 </html>
