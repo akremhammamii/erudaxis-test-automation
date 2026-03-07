@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erudaxis Test Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1f2937;
+            line-height: 1;
+        }
+
+        .stat-trend {
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            color: #6b7280;
+        }
+
+        .success { color: #10b981; }
+        .failure { color: #ef4444; }
+        .warning { color: #f59e0b; }
+
+        .history-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .history-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .run-header {
+            display: grid;
+            grid-template-columns: 80px 200px 120px 100px 220px 150px;
+            gap: 1rem;
+            padding: 1rem;
+            font-weight: 700;
+            color: #6b7280;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .run-item {
+            display: grid;
+            grid-template-columns: 80px 200px 120px 100px 220px 150px;
+            gap: 1rem;
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .run-item:hover {
+            background: linear-gradient(90deg, #f9fafb, transparent);
+            border-left: 3px solid #667eea;
+            padding-left: calc(1rem - 3px);
+        }
+
+        .run-number {
+            font-weight: 800;
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .run-date {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-success {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #065f46;
+        }
+
+        .badge-failure {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+        }
+
+        .badge-unknown {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            color: #4b5563;
+        }
+
+        .sparkline {
+            width: 100%;
+            height: 50px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .run-header, .run-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .run-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="animate">
+            <h1>🧪 Erudaxis Test Dashboard</h1>
+            <p class="subtitle">Automated Selenium WebDriver Testing | Cucumber BDD</p>
+        </header>
+
+        <div class="stats-grid animate" style="animation-delay: 0.1s;">
+            <div class="stat-card">
+                <div class="stat-label">📊 Total Runs</div>
+                <div class="stat-value">1</div>
+                <div class="stat-trend">Test executions tracked</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">📈 Overall Pass Rate</div>
+                <div class="stat-value success">
+                    100%
+                </div>
+                <div class="stat-trend">Average across all runs</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">🎯 Last Run</div>
+                <div class="stat-value success">
+                    100%
+                </div>
+                <div class="stat-trend">
+                    ✅ 14 passed ·
+                    ❌ 0 failed ·
+                    ⏭️ 0 skipped
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">📉 Trend (Last 1)</div>
+                <svg class="sparkline" viewBox="0 0 200 50" preserveAspectRatio="none">
+                    <!-- Grille -->
+                    <line x1="0" y1="12.5" x2="200" y2="12.5" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="0" y1="25" x2="200" y2="25" stroke="#e5e7eb" stroke-width="1"/>
+                    <line x1="0" y1="37.5" x2="200" y2="37.5" stroke="#f3f4f6" stroke-width="1"/>
+
+                    <!-- Ligne de tendance -->
+                    <polyline
+                        fill="none"
+                        stroke="#10b981"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        points="0,25 200,25"
+                    />
+
+                    <!-- Points -->
+                    <circle cx="NaN" cy="0" r="3" fill="#10b981" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="history-card animate" style="animation-delay: 0.2s;">
+            <h2 class="history-title">
+                <span>📋 Test Run History</span>
+            </h2>
+
+            <div class="run-header">
+                <div>RUN</div>
+                <div>DATE</div>
+                <div>STATUS</div>
+                <div>PASS RATE</div>
+                <div>RESULTS</div>
+                <div>BROWSERS</div>
+            </div>
+
+            
+                <div class="run-item">
+                    <div class="run-number">#1</div>
+                    <div class="run-date">07/03/2026 13:56</div>
+                    <div>
+                        <span class="badge badge-success">
+                            ✓ PASS
+                        </span>
+                    </div>
+                    <div class="success"
+                         style="font-weight: 700; font-size: 1.125rem;">
+                        100%
+                    </div>
+                    <div style="font-size: 0.875rem; color: #6b7280; font-family: monospace;">
+                        ✅ 14 · ❌ 0 · ⏭️ 0 / 14
+                    </div>
+                    <div style="font-size: 0.75rem; color: #9ca3af; font-weight: 600;">
+                        Chrome, Firefox
+                    </div>
+                </div>
+            
+        </div>
+
+        <footer class="animate" style="animation-delay: 0.3s;">
+            <p>🚀 Powered by Selenium WebDriver + Cucumber + GitHub Actions</p>
+            <p style="margin-top: 0.5rem; font-size: 0.75rem;">
+                Last updated: 07/03/2026 13:56:08
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
+    
