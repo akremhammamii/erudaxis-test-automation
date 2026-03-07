@@ -1,494 +1,344 @@
 const fs = require('fs');
 const path = require('path');
 
-// Configuration adaptée à votre architecture
 const RESULTS_DIR = './test-results';
+const LATEST_DIR = path.join(RESULTS_DIR, 'latest');
 const DASHBOARD_DIR = './dashboard';
 const HISTORY_FILE = path.join(RESULTS_DIR, 'history.json');
-const MAX_HISTORY = 20;
+const DASHBOARD_HISTORY_FILE = path.join(DASHBOARD_DIR, 'history.json');
+const MAX_HISTORY = 30;
 
-console.log('🚀 Génération du dashboard...');
+main();
 
-// Créer le dossier dashboard
-if (!fs.existsSync(DASHBOARD_DIR)) {
-    fs.mkdirSync(DASHBOARD_DIR, { recursive: true });
-}
+function main() {
+  ensureDir(DASHBOARD_DIR);
 
-// Charger l'historique
-let history = [];
-if (fs.existsSync(HISTORY_FILE)) {
-    try {
-        history = JSON.parse(fs.readFileSync(HISTORY_FILE, 'utf8'));
-    } catch (e) {
-        console.warn('⚠️ Impossible de charger l\'historique, création d\'un nouveau');
-        history = [];
-    }
-}
+  const history = loadHistory();
+  const current = readLatestResults();
 
-// Lire les résultats actuels
-const latestResults = readLatestResults();
-
-if (latestResults.totalTests === 0) {
-    console.warn('⚠️ Aucun test trouvé');
-} else {
-    console.log(`✅ ${latestResults.totalTests} tests trouvés`);
-}
-
-// Ajouter au historique
-const run = {
+  const run = {
     runNumber: history.length + 1,
     timestamp: new Date().toISOString(),
-    date: new Date().toLocaleString('fr-FR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    }),
-    ...latestResults
-};
+    date: formatDate(new Date()),
+    ...current,
+  };
 
-history.unshift(run);
-history = history.slice(0, MAX_HISTORY);
+  history.unshift(run);
+  const trimmed = history.slice(0, MAX_HISTORY);
 
-// Sauvegarder l'historique
-fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2));
-console.log(`💾 Historique sauvegardé (${history.length} runs)`);
+  ensureDir(RESULTS_DIR);
+  fs.writeFileSync(HISTORY_FILE, JSON.stringify(trimmed, null, 2));
+  fs.writeFileSync(DASHBOARD_HISTORY_FILE, JSON.stringify(trimmed, null, 2));
 
-// Générer le dashboard HTML
-generateDashboard(history);
+  const html = renderDashboard(trimmed);
+  fs.writeFileSync(path.join(DASHBOARD_DIR, 'index.html'), html, 'utf8');
 
-console.log('✅ Dashboard généré avec succès !');
-console.log(`📊 URL: https://VOTRE_USERNAME.github.io/erudaxis-test-automation/`);
+  console.log(`Dashboard generated with ${trimmed.length} run(s)`);
+}
 
-// === FONCTIONS ===
+function loadHistory() {
+  const source = fs.existsSync(HISTORY_FILE)
+    ? HISTORY_FILE
+    : fs.existsSync(DASHBOARD_HISTORY_FILE)
+      ? DASHBOARD_HISTORY_FILE
+      : null;
+
+  if (!source) return [];
+
+  try {
+    const parsed = JSON.parse(fs.readFileSync(source, 'utf8'));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
 
 function readLatestResults() {
-    const latestDir = path.join(RESULTS_DIR, 'latest');
+  if (!fs.existsSync(LATEST_DIR)) return emptyResults();
 
-    if (!fs.existsSync(latestDir)) {
-        console.warn('⚠️ Dossier latest non trouvé');
-        return getEmptyResults();
+  const files = fs.readdirSync(LATEST_DIR).filter((f) => f.endsWith('.json') && f.includes('cucumber'));
+  if (files.length === 0) return emptyResults();
+
+  let totalTests = 0;
+  let passed = 0;
+  let failed = 0;
+  let skipped = 0;
+  const browsers = new Set();
+  const byBrowser = {};
+
+  for (const file of files) {
+    const browser = detectBrowser(file);
+    browsers.add(browser);
+
+    if (!byBrowser[browser]) {
+      byBrowser[browser] = { total: 0, passed: 0, failed: 0, skipped: 0 };
     }
 
-    const cucumberFiles = fs.readdirSync(latestDir)
-        .filter(f => f.endsWith('.json') && f.includes('cucumber'));
+    try {
+      const json = JSON.parse(fs.readFileSync(path.join(LATEST_DIR, file), 'utf8'));
+      for (const feature of json || []) {
+        for (const scenario of feature.elements || []) {
+          totalTests += 1;
+          byBrowser[browser].total += 1;
 
-    if (cucumberFiles.length === 0) {
-        console.warn('⚠️ Aucun fichier JSON trouvé');
-        return getEmptyResults();
-    }
+          const steps = scenario.steps || [];
+          const allPassed = steps.length > 0 && steps.every((s) => s.result && s.result.status === 'passed');
+          const hasSkipped = steps.some((s) => s.result && s.result.status === 'skipped');
 
-    let totalTests = 0;
-    let passed = 0;
-    let failed = 0;
-    let skipped = 0;
-    const browsers = new Set();
-
-    cucumberFiles.forEach(file => {
-        const browser = file.includes('chrome') ? 'Chrome' :
-                       file.includes('firefox') ? 'Firefox' : 'Unknown';
-        browsers.add(browser);
-
-        try {
-            const content = JSON.parse(
-                fs.readFileSync(path.join(latestDir, file), 'utf8')
-            );
-
-            content.forEach(feature => {
-                if (!feature.elements) return;
-
-                feature.elements.forEach(scenario => {
-                    totalTests++;
-                    const allPassed = scenario.steps.every(s => s.result.status === 'passed');
-                    const hasSkipped = scenario.steps.some(s => s.result.status === 'skipped');
-
-                    if (allPassed) {
-                        passed++;
-                    } else if (hasSkipped) {
-                        skipped++;
-                    } else {
-                        failed++;
-                    }
-                });
-            });
-        } catch (e) {
-            console.error(`❌ Erreur lors de la lecture de ${file}:`, e.message);
+          if (allPassed) {
+            passed += 1;
+            byBrowser[browser].passed += 1;
+          } else if (hasSkipped) {
+            skipped += 1;
+            byBrowser[browser].skipped += 1;
+          } else {
+            failed += 1;
+            byBrowser[browser].failed += 1;
+          }
         }
-    });
+      }
+    } catch (err) {
+      console.error(`Cannot parse ${file}: ${err.message}`);
+    }
+  }
 
-    const passRate = totalTests > 0 ? ((passed / totalTests) * 100).toFixed(1) : 0;
-
-    return {
-        totalTests,
-        passed,
-        failed,
-        skipped,
-        passRate: parseFloat(passRate),
-        browsers: Array.from(browsers).join(', '),
-        status: failed === 0 ? 'success' : 'failure'
-    };
+  const passRate = percent(passed, totalTests);
+  return {
+    totalTests,
+    passed,
+    failed,
+    skipped,
+    passRate,
+    status: failed > 0 ? 'failure' : totalTests > 0 ? 'success' : 'unknown',
+    browsers: Array.from(browsers).join(', ') || 'N/A',
+    browserCount: browsers.size,
+    byBrowser,
+  };
 }
 
-function getEmptyResults() {
-    return {
-        totalTests: 0,
-        passed: 0,
-        failed: 0,
-        skipped: 0,
-        passRate: 0,
-        browsers: 'N/A',
-        status: 'unknown'
-    };
+function emptyResults() {
+  return {
+    totalTests: 0,
+    passed: 0,
+    failed: 0,
+    skipped: 0,
+    passRate: 0,
+    status: 'unknown',
+    browsers: 'N/A',
+    browserCount: 0,
+    byBrowser: {},
+  };
 }
 
-function generateDashboard(history) {
-    const stats = calculateStats(history);
-    const sparklineData = history.slice(0, 20).reverse().map(r => r.passRate);
+function detectBrowser(fileName) {
+  const f = fileName.toLowerCase();
+  if (f.includes('chrome')) return 'Chrome';
+  if (f.includes('firefox')) return 'Firefox';
+  return 'Unknown';
+}
 
-    const html = `
-<!DOCTYPE html>
+function percent(value, total) {
+  if (!total) return 0;
+  return Number(((value / total) * 100).toFixed(1));
+}
+
+function formatDate(date) {
+  return date.toLocaleString('fr-FR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
+function renderDashboard(history) {
+  const latest = history[0] || emptyResults();
+  const averagePassRate = history.length
+    ? Number((history.reduce((sum, r) => sum + (r.passRate || 0), 0) / history.length).toFixed(1))
+    : 0;
+
+  const trendBars = history
+    .slice(0, 20)
+    .reverse()
+    .map((r) => {
+      const color = r.passRate >= 80 ? 'var(--ok)' : r.passRate >= 50 ? 'var(--warn)' : 'var(--bad)';
+      return `<div class="bar-wrap"><div class="bar" style="height:${Math.max(r.passRate, 4)}%;background:${color}"></div></div>`;
+    })
+    .join('');
+
+  const browserChips = Object.entries(latest.byBrowser || {})
+    .map(([name, s]) => `<span class="chip">${name}: ${s.passed}/${s.total}</span>`)
+    .join('');
+
+  const rows = history
+    .map((r) => {
+      const badgeClass = r.status === 'success' ? 'ok' : r.status === 'failure' ? 'bad' : 'muted';
+      return `
+        <tr>
+          <td>#${r.runNumber}</td>
+          <td>${escapeHtml(r.date || '')}</td>
+          <td><span class="badge ${badgeClass}">${r.status.toUpperCase()}</span></td>
+          <td>${r.passRate}%</td>
+          <td>${r.passed} / ${r.totalTests}</td>
+          <td>${escapeHtml(r.browsers || 'N/A')}</td>
+        </tr>`;
+    })
+    .join('');
+
+  return `<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erudaxis Test Dashboard</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem;
-        }
-        .container { max-width: 1400px; margin: 0 auto; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Erudaxis QA Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b132b;
+      --panel: #111b38;
+      --panel-2: #152448;
+      --text: #e8eefc;
+      --muted: #9db0d8;
+      --ok: #2ecc71;
+      --bad: #ff5f6d;
+      --warn: #f5b041;
+      --line: rgba(255,255,255,0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: radial-gradient(1200px 500px at 80% -20%, #284a9b 0%, transparent 65%), var(--bg);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .hero { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
+    h1 { margin: 0; font-size: 30px; }
+    .sub { color: var(--muted); font-size: 14px; }
 
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .card {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      min-height: 116px;
+    }
+    .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .value { font-size: 34px; font-weight: 700; margin-top: 6px; }
+    .value.ok { color: var(--ok); }
+    .value.bad { color: var(--bad); }
+    .value.warn { color: var(--warn); }
+    .chips { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip { border: 1px solid var(--line); padding: 4px 8px; border-radius: 999px; color: var(--muted); font-size: 12px; }
 
-        h1 {
-            color: white;
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
+    .trend {
+      margin-top: 20px;
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .bars { height: 120px; display: flex; align-items: end; gap: 6px; margin-top: 14px; }
+    .bar-wrap { flex: 1; height: 100%; display: flex; align-items: end; }
+    .bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 4px; }
 
-        .subtitle {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.1rem;
-        }
+    .table {
+      margin-top: 20px;
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: 14px; }
+    th { color: var(--muted); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: none; }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
+    .badge { font-size: 11px; padding: 4px 8px; border-radius: 999px; font-weight: 700; }
+    .badge.ok { background: rgba(46,204,113,.2); color: var(--ok); }
+    .badge.bad { background: rgba(255,95,109,.2); color: var(--bad); }
+    .badge.muted { background: rgba(157,176,216,.2); color: var(--muted); }
 
-        .stat-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #667eea, #764ba2);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        .stat-value {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #1f2937;
-            line-height: 1;
-        }
-
-        .stat-trend {
-            font-size: 0.875rem;
-            margin-top: 0.75rem;
-            color: #6b7280;
-        }
-
-        .success { color: #10b981; }
-        .failure { color: #ef4444; }
-        .warning { color: #f59e0b; }
-
-        .history-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .history-title {
-            font-size: 1.75rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .run-header {
-            display: grid;
-            grid-template-columns: 80px 200px 120px 100px 220px 150px;
-            gap: 1rem;
-            padding: 1rem;
-            font-weight: 700;
-            color: #6b7280;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 2px solid #e5e7eb;
-        }
-
-        .run-item {
-            display: grid;
-            grid-template-columns: 80px 200px 120px 100px 220px 150px;
-            gap: 1rem;
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid #f3f4f6;
-            align-items: center;
-            transition: all 0.2s;
-        }
-
-        .run-item:hover {
-            background: linear-gradient(90deg, #f9fafb, transparent);
-            border-left: 3px solid #667eea;
-            padding-left: calc(1rem - 3px);
-        }
-
-        .run-number {
-            font-weight: 800;
-            color: #667eea;
-            font-size: 1.5rem;
-        }
-
-        .run-date {
-            color: #6b7280;
-            font-size: 0.875rem;
-            font-family: 'Courier New', monospace;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .badge-success {
-            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-            color: #065f46;
-        }
-
-        .badge-failure {
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            color: #991b1b;
-        }
-
-        .badge-unknown {
-            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
-            color: #4b5563;
-        }
-
-        .sparkline {
-            width: 100%;
-            height: 50px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.875rem;
-        }
-
-        @media (max-width: 768px) {
-            .run-header, .run-item {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-
-            .run-item {
-                padding: 1rem;
-            }
-        }
-    </style>
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      th, td { padding: 10px; font-size: 12px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="animate">
-            <h1>🧪 Erudaxis Test Dashboard</h1>
-            <p class="subtitle">Automated Selenium WebDriver Testing | Cucumber BDD</p>
-        </header>
-
-        <div class="stats-grid animate" style="animation-delay: 0.1s;">
-            <div class="stat-card">
-                <div class="stat-label">📊 Total Runs</div>
-                <div class="stat-value">${history.length}</div>
-                <div class="stat-trend">Test executions tracked</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-label">📈 Overall Pass Rate</div>
-                <div class="stat-value ${stats.avgPassRate >= 80 ? 'success' : stats.avgPassRate >= 50 ? 'warning' : 'failure'}">
-                    ${stats.avgPassRate}%
-                </div>
-                <div class="stat-trend">Average across all runs</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-label">🎯 Last Run</div>
-                <div class="stat-value ${history[0].status === 'success' ? 'success' : 'failure'}">
-                    ${history[0].passRate}%
-                </div>
-                <div class="stat-trend">
-                    ✅ ${history[0].passed} passed ·
-                    ❌ ${history[0].failed} failed ·
-                    ⏭️ ${history[0].skipped} skipped
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-label">📉 Trend (Last ${sparklineData.length})</div>
-                <svg class="sparkline" viewBox="0 0 200 50" preserveAspectRatio="none">
-                    <!-- Grille -->
-                    <line x1="0" y1="12.5" x2="200" y2="12.5" stroke="#f3f4f6" stroke-width="1"/>
-                    <line x1="0" y1="25" x2="200" y2="25" stroke="#e5e7eb" stroke-width="1"/>
-                    <line x1="0" y1="37.5" x2="200" y2="37.5" stroke="#f3f4f6" stroke-width="1"/>
-
-                    <!-- Ligne de tendance -->
-                    <polyline
-                        fill="none"
-                        stroke="${stats.avgPassRate >= 80 ? '#10b981' : '#ef4444'}"
-                        stroke-width="3"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        points="${generateSparkline(sparklineData)}"
-                    />
-
-                    <!-- Points -->
-                    ${sparklineData.map((value, index) => {
-                        const x = (index / (sparklineData.length - 1)) * 200;
-                        const y = 50 - ((value / 100) * 50);
-                        return `<circle cx="${x}" cy="${y}" r="3" fill="${value >= 80 ? '#10b981' : '#ef4444'}" />`;
-                    }).join('')}
-                </svg>
-            </div>
-        </div>
-
-        <div class="history-card animate" style="animation-delay: 0.2s;">
-            <h2 class="history-title">
-                <span>📋 Test Run History</span>
-            </h2>
-
-            <div class="run-header">
-                <div>RUN</div>
-                <div>DATE</div>
-                <div>STATUS</div>
-                <div>PASS RATE</div>
-                <div>RESULTS</div>
-                <div>BROWSERS</div>
-            </div>
-
-            ${history.map(run => `
-                <div class="run-item">
-                    <div class="run-number">#${run.runNumber}</div>
-                    <div class="run-date">${run.date}</div>
-                    <div>
-                        <span class="badge badge-${run.status}">
-                            ${run.status === 'success' ? '✓ PASS' : run.status === 'failure' ? '✗ FAIL' : '? UNKNOWN'}
-                        </span>
-                    </div>
-                    <div class="${run.passRate >= 80 ? 'success' : run.passRate >= 50 ? 'warning' : 'failure'}"
-                         style="font-weight: 700; font-size: 1.125rem;">
-                        ${run.passRate}%
-                    </div>
-                    <div style="font-size: 0.875rem; color: #6b7280; font-family: monospace;">
-                        ✅ ${run.passed} · ❌ ${run.failed} · ⏭️ ${run.skipped} / ${run.totalTests}
-                    </div>
-                    <div style="font-size: 0.75rem; color: #9ca3af; font-weight: 600;">
-                        ${run.browsers}
-                    </div>
-                </div>
-            `).join('')}
-        </div>
-
-        <footer class="animate" style="animation-delay: 0.3s;">
-            <p>🚀 Powered by Selenium WebDriver + Cucumber + GitHub Actions</p>
-            <p style="margin-top: 0.5rem; font-size: 0.75rem;">
-                Last updated: ${new Date().toLocaleString('fr-FR')}
-            </p>
-        </footer>
+  <div class="container">
+    <div class="hero">
+      <div>
+        <h1>Erudaxis QA Dashboard</h1>
+        <div class="sub">Automated Selenium + Cucumber results</div>
+      </div>
+      <div class="sub">Last update: ${escapeHtml(formatDate(new Date()))}</div>
     </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="label">Total Runs</div>
+        <div class="value">${history.length}</div>
+      </div>
+      <div class="card">
+        <div class="label">Average Pass Rate</div>
+        <div class="value ${averagePassRate >= 80 ? 'ok' : averagePassRate >= 50 ? 'warn' : 'bad'}">${averagePassRate}%</div>
+      </div>
+      <div class="card">
+        <div class="label">Latest Run</div>
+        <div class="value ${latest.passRate >= 80 ? 'ok' : latest.passRate >= 50 ? 'warn' : 'bad'}">${latest.passRate}%</div>
+        <div class="sub">${latest.passed} passed, ${latest.failed} failed, ${latest.skipped} skipped</div>
+      </div>
+      <div class="card">
+        <div class="label">Browsers (Latest)</div>
+        <div class="value">${latest.browserCount || 0}</div>
+        <div class="chips">${browserChips || '<span class="chip">No data</span>'}</div>
+      </div>
+    </div>
+
+    <div class="trend">
+      <div class="label">Pass Rate Trend (up to last 20 runs)</div>
+      <div class="bars">${trendBars}</div>
+    </div>
+
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Run</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Pass Rate</th>
+            <th>Passed / Total</th>
+            <th>Browsers</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows || '<tr><td colspan="6">No history yet</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
-</html>
-    `;
-
-    fs.writeFileSync(path.join(DASHBOARD_DIR, 'index.html'), html);
+</html>`;
 }
 
-function calculateStats(history) {
-    if (history.length === 0) {
-        return { avgPassRate: 0 };
-    }
-
-    const avgPassRate = history.reduce((sum, r) => sum + r.passRate, 0) / history.length;
-    return { avgPassRate: parseFloat(avgPassRate.toFixed(1)) };
-}
-
-function generateSparkline(data) {
-    if (data.length === 0) return '';
-    if (data.length === 1) return '0,25 200,25';
-
-    const width = 200;
-    const height = 50;
-
-    const points = data.map((value, index) => {
-        const x = (index / (data.length - 1)) * width;
-        const y = height - ((value / 100) * height);
-        return `${x.toFixed(2)},${y.toFixed(2)}`;
-    });
-
-    return points.join(' ');
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }

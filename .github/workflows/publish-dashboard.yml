@@ -35,25 +35,29 @@ jobs:
       - name: Merge results
         run: |
           mkdir -p test-results/latest
-          
-          # Chercher et copier tous les JSON
+
           if [ -d "test-results-artifacts" ]; then
             find test-results-artifacts -name "*.json" -exec cp {} test-results/latest/ \; 2>/dev/null || true
-            echo "✅ Fichiers JSON copiés"
+            echo "JSON files merged"
           else
-            echo "⚠️ Aucun artifact trouvé, création d'un dashboard vide"
+            echo "No artifacts found; generating empty dashboard"
           fi
-          
-          # Lister ce qu'on a
-          echo "📁 Contenu de test-results/latest:"
-          ls -la test-results/latest/ || echo "Dossier vide"
+
+          echo "Content of test-results/latest:"
+          ls -la test-results/latest/ || echo "Empty folder"
+
+      - name: Restore previous dashboard history
+        run: |
+          mkdir -p test-results
+          git fetch origin gh-pages --depth=1 || true
+          git show origin/gh-pages:history.json > test-results/history.json 2>/dev/null || echo "[]"
 
       - name: Generate Dashboard
         run: node scripts/generate-dashboard.js
 
       - name: List generated files
         run: |
-          echo "📁 Contenu du dashboard:"
+          echo "Content of dashboard:"
           ls -la dashboard/
 
       - name: Deploy to GitHub Pages
@@ -62,4 +66,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dashboard
           publish_branch: gh-pages
-          force_orphan: true
