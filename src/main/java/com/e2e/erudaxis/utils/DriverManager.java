@@ -57,7 +57,9 @@ public class DriverManager {
         }
 
         // Configurer les timeouts
-        getDriver().manage().window().maximize();
+        if (!headless) {
+            getDriver().manage().window().maximize();
+        }
 // ✅ Configurer les timeouts
         getDriver().manage().timeouts().pageLoadTimeout(
                 Duration.ofSeconds(ConfigReader.getTimeout())
@@ -75,9 +77,17 @@ public class DriverManager {
      */
     private static void initChromeDriver(boolean headless) {
         logger.debug("Initialisation du driver Chrome...");
-        WebDriverManager.chromedriver().setup();
+        if (System.getenv("CI") == null) {
+            WebDriverManager.chromedriver().setup();
+        } else {
+            logger.info("CI detected: relying on Selenium Manager / system browser setup");
+        }
 
         ChromeOptions options = new ChromeOptions();
+        String chromeBin = System.getenv("CHROME_BIN");
+        if (chromeBin != null && !chromeBin.isBlank()) {
+            options.setBinary(chromeBin);
+        }
 
         if (headless) {
             logger.debug("Mode headless activé pour Chrome");
@@ -90,7 +100,8 @@ public class DriverManager {
                 "--disable-gpu",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
-                "--start-maximized"
+                "--window-size=1920,1080",
+                "--remote-debugging-port=9222"
         );
 
         driver.set(new ChromeDriver(options));

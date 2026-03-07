@@ -30,6 +30,10 @@ public class ConfigReader {
     }
 
     public static String get(String key) {
+        String systemValue = System.getProperty(key);
+        if (systemValue != null && !systemValue.isEmpty()) {
+            return systemValue;
+        }
 
         String envKey = key.toUpperCase().replace(".", "_");
         String envValue = System.getenv(envKey);
