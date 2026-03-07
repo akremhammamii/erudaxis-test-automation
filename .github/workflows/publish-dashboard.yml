@@ -1,22 +1,22 @@
-name: Publish Test Dashboard
+name: Publish Dashboard
 
 on:
   workflow_run:
     workflows: ["Selenium Tests"]
-    types:
-      - completed
+    types: [completed]
 
 permissions:
   contents: write
   pages: write
   id-token: write
+  actions: read
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -24,25 +24,37 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Download all test results
-        uses: actions/download-artifact@v4
+      - name: Download artifacts from workflow run
+        uses: dawidd6/action-download-artifact@v3
         with:
-          pattern: test-results-*
+          workflow: run-tests.yml
+          run_id: ${{ github.event.workflow_run.id }}
           path: test-results-artifacts/
+        continue-on-error: true
 
-      - name: Merge test results
+      - name: Merge results
         run: |
           mkdir -p test-results/latest
           
-          # Fusionner tous les résultats
-          find test-results-artifacts -name "*.json" -exec cp {} test-results/latest/ \;
+          # Chercher et copier tous les JSON
+          if [ -d "test-results-artifacts" ]; then
+            find test-results-artifacts -name "*.json" -exec cp {} test-results/latest/ \; 2>/dev/null || true
+            echo "✅ Fichiers JSON copiés"
+          else
+            echo "⚠️ Aucun artifact trouvé, création d'un dashboard vide"
+          fi
           
-          # Copier les screenshots
-          find test-results-artifacts -type d -name "screenshots" -exec cp -r {} test-results/latest/ \;
+          # Lister ce qu'on a
+          echo "📁 Contenu de test-results/latest:"
+          ls -la test-results/latest/ || echo "Dossier vide"
 
       - name: Generate Dashboard
+        run: node scripts/generate-dashboard.js
+
+      - name: List generated files
         run: |
-          node scripts/generate-dashboard.js
+          echo "📁 Contenu du dashboard:"
+          ls -la dashboard/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -50,3 +62,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dashboard
           publish_branch: gh-pages
+          force_orphan: true
