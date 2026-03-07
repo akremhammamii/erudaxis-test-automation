@@ -16,16 +16,14 @@ public class ConfigReader {
     private static final Map<String, String> dotenv = loadDotEnv();
 
     static {
-        try (InputStream input = ConfigReader.class
-                .getClassLoader()
-                .getResourceAsStream("config.properties")) {
-
-            if (input == null) {
-                throw new RuntimeException("config.properties not found");
+        try {
+            loadPropertiesFromClasspath("config.properties");
+            if (properties.isEmpty()) {
+                loadPropertiesFromClasspath("config.properties.example");
             }
-
-            properties.load(input);
-
+            if (properties.isEmpty()) {
+                throw new RuntimeException("Neither config.properties nor config.properties.example was found");
+            }
         } catch (Exception e) {
             throw new RuntimeException("Failed to load config file", e);
         }
@@ -112,6 +110,16 @@ public class ConfigReader {
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to load .env file: " + path, e);
+        }
+    }
+
+    private static void loadPropertiesFromClasspath(String fileName) throws IOException {
+        try (InputStream input = ConfigReader.class
+                .getClassLoader()
+                .getResourceAsStream(fileName)) {
+            if (input != null) {
+                properties.load(input);
+            }
         }
     }
 }

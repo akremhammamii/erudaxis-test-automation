@@ -1,13 +1,13 @@
 # ERUDAXIS TEST AUTOMATION CONFIGURATION
-# Copiez ce fichier vers config.properties
-# et remplacez par vos vraies credentials
+# Copy this file to config.properties for local usage,
+# or rely on environment variables in CI.
 
 base.url=https://staging.erudaxis.com/
 browser=chrome
 timeout.seconds=15
 headless=false
+dashboard.timeout.seconds=30
 
-# REMPLACER PAR VOS VRAIES VALEURS
-login.email=votre.email@example.com
-login.password=VotreMotDePasse123!
-login.department=Collège
+login.email=${LOGIN_EMAIL}
+login.password=${LOGIN_PASSWORD}
+login.department=${LOGIN_DEPARTMENT}
