@@ -44,15 +44,30 @@ jobs:
           google-chrome --version || true
           firefox --version || true
 
-      - name: Set environment variables
+      - name: Validate required secrets
+        env:
+          LOGIN_EMAIL: ${{ secrets.LOGIN_EMAIL }}
+          LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
         run: |
-          echo "LOGIN_EMAIL=${{ secrets.LOGIN_EMAIL }}" >> $GITHUB_ENV
-          echo "LOGIN_PASSWORD=${{ secrets.LOGIN_PASSWORD }}" >> $GITHUB_ENV
-          echo "LOGIN_DEPARTMENT=College" >> $GITHUB_ENV
+          if [ -z "$LOGIN_EMAIL" ]; then
+            echo "Missing required secret: LOGIN_EMAIL"
+            exit 1
+          fi
+          if [ -z "$LOGIN_PASSWORD" ]; then
+            echo "Missing required secret: LOGIN_PASSWORD"
+            exit 1
+          fi
+
+      - name: Resolve Chrome binary
+        run: |
           CHROME_PATH=$(which google-chrome || which chrome || true)
           echo "CHROME_BIN=$CHROME_PATH" >> $GITHUB_ENV
 
       - name: Run tests
+        env:
+          LOGIN_EMAIL: ${{ secrets.LOGIN_EMAIL }}
+          LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
+          LOGIN_DEPARTMENT: College
         run: |
           mvn clean test \
             -Dbrowser=${{ matrix.browser }} \
