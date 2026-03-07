@@ -240,7 +240,7 @@
                     <properties>
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
-                            cucumber.plugin=io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, html:target/cucumber-report.html
+                            cucumber.plugin=io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, json:test-output/cucumber-reports/cucumber.json, html:test-output/cucumber-reports/cucumber.html
                             cucumber.publish.quiet=true
                         </configurationParameters>
                     </properties>

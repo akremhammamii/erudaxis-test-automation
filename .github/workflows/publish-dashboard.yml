@@ -1,0 +1,52 @@
+name: Publish Test Dashboard
+
+on:
+  workflow_run:
+    workflows: ["Selenium Tests"]
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: test-results-*
+          path: test-results-artifacts/
+
+      - name: Merge test results
+        run: |
+          mkdir -p test-results/latest
+          
+          # Fusionner tous les résultats
+          find test-results-artifacts -name "*.json" -exec cp {} test-results/latest/ \;
+          
+          # Copier les screenshots
+          find test-results-artifacts -type d -name "screenshots" -exec cp -r {} test-results/latest/ \;
+
+      - name: Generate Dashboard
+        run: |
+          node scripts/generate-dashboard.js
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dashboard
+          publish_branch: gh-pages

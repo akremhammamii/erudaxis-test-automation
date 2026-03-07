@@ -82,6 +82,9 @@ cucumber-reports/
 test-output/
 surefire-reports/
 extent-reports/
+dashboard/
+test-results/*
+!test-results/history.json
 
 # Screenshots & Videos
 screenshots/
@@ -194,4 +197,3 @@ env/
 # Excel test data (décommenter si vous voulez versionner les données de test)
 # *.xlsx
 # *.xls
-
