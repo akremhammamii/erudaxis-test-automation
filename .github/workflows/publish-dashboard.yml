@@ -48,12 +48,19 @@ jobs:
 
       - name: Restore previous dashboard history
         run: |
-          mkdir -p test-results
+          mkdir -p dashboard
           git fetch origin gh-pages --depth=1 || true
-          git show origin/gh-pages:history.json > test-results/history.json 2>/dev/null || echo "[]"
+          git show origin/gh-pages:runs-history.json > dashboard/runs-history.json 2>/dev/null || echo "[]"
 
       - name: Generate Dashboard
-        run: node scripts/generate-dashboard.js
+        run: |
+          node scripts/generate-dashboard.js \
+            --browser all \
+            --branch "${{ github.event.workflow_run.head_branch }}" \
+            --run-id "${{ github.event.workflow_run.id }}" \
+            --run-number "${{ github.event.workflow_run.run_number }}" \
+            --repo "${{ github.repository }}" \
+            --json-path "test-results/latest"
 
       - name: List generated files
         run: |
