@@ -51,6 +51,7 @@ jobs:
           mkdir -p dashboard
           git fetch origin gh-pages --depth=1 || true
           git show origin/gh-pages:runs-history.json > dashboard/runs-history.json 2>/dev/null || echo "[]"
+          git show origin/gh-pages:test-runs-history.json > dashboard/test-runs-history.json 2>/dev/null || echo "[]"
 
       - name: Generate Dashboard
         run: |
