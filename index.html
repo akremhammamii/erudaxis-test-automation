@@ -1,148 +1,78 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Erudaxis QA Dashboard</title>
-  <style>
-    :root {
-      --bg: #0b132b;
-      --panel: #111b38;
-      --panel-2: #152448;
-      --text: #e8eefc;
-      --muted: #9db0d8;
-      --ok: #2ecc71;
-      --bad: #ff5f6d;
-      --warn: #f5b041;
-      --line: rgba(255,255,255,0.1);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      color: var(--text);
-      background: radial-gradient(1200px 500px at 80% -20%, #284a9b 0%, transparent 65%), var(--bg);
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
-    .hero { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
-    h1 { margin: 0; font-size: 30px; }
-    .sub { color: var(--muted); font-size: 14px; }
-
-    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
-    .card {
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px;
-      min-height: 116px;
-    }
-    .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-    .value { font-size: 34px; font-weight: 700; margin-top: 6px; }
-    .value.ok { color: var(--ok); }
-    .value.bad { color: var(--bad); }
-    .value.warn { color: var(--warn); }
-    .chips { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .chip { border: 1px solid var(--line); padding: 4px 8px; border-radius: 999px; color: var(--muted); font-size: 12px; }
-
-    .trend {
-      margin-top: 20px;
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px;
-    }
-    .bars { height: 120px; display: flex; align-items: end; gap: 6px; margin-top: 14px; }
-    .bar-wrap { flex: 1; height: 100%; display: flex; align-items: end; }
-    .bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 4px; }
-
-    .table {
-      margin-top: 20px;
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-    }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: 14px; }
-    th { color: var(--muted); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
-    tr:last-child td { border-bottom: none; }
-
-    .badge { font-size: 11px; padding: 4px 8px; border-radius: 999px; font-weight: 700; }
-    .badge.ok { background: rgba(46,204,113,.2); color: var(--ok); }
-    .badge.bad { background: rgba(255,95,109,.2); color: var(--bad); }
-    .badge.muted { background: rgba(157,176,216,.2); color: var(--muted); }
-
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .hero { flex-direction: column; align-items: flex-start; }
-    }
-    @media (max-width: 640px) {
-      .grid { grid-template-columns: 1fr; }
-      th, td { padding: 10px; font-size: 12px; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QA Dashboard</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text)}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.h1{font-size:28px;font-weight:800}.sub{color:var(--muted);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.v{font-size:30px;font-weight:800;margin-top:4px}
+.mid{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:12px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.bars{height:130px;display:flex;align-items:flex-end;gap:5px;margin-top:12px}.b{flex:1;height:100%;display:flex;align-items:flex-end}.b span{width:100%;border-radius:5px 5px 0 0;display:block}
+.ring{width:110px;height:110px;border-radius:50%;position:relative;margin:8px auto 6px}.ring::after{content:"";position:absolute;inset:14px;background:#fff;border-radius:50%}
+.ringv{position:relative;z-index:2;text-align:center;margin-top:-78px;font-weight:800;font-size:22px}
+.table{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:auto}
+table{width:100%;border-collapse:collapse}th,td{padding:10px 12px;border-bottom:1px solid var(--line);font-size:13px;text-align:left}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+tr:last-child td{border-bottom:none}.badge{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}.ok{background:#dcfce7;color:#166534}.ko{background:#fee2e2;color:#991b1b}.na{background:#e2e8f0;color:#475569}
+@media(max-width:1000px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.mid{grid-template-columns:1fr}}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="hero">
-      <div>
-        <h1>Erudaxis QA Dashboard</h1>
-        <div class="sub">Automated Selenium + Cucumber results</div>
-      </div>
-      <div class="sub">Last update: 07/03/2026 14:00</div>
-    </div>
+<div class="wrap">
+  <div class="top">
+    <div><div class="h1">Test Execution Dashboard</div><div class="sub">Selenium + Cucumber + GitHub Actions</div></div>
+    <div class="sub">Updated: 07/03/2026 14:10</div>
+  </div>
 
-    <div class="grid">
-      <div class="card">
-        <div class="label">Total Runs</div>
-        <div class="value">1</div>
-      </div>
-      <div class="card">
-        <div class="label">Average Pass Rate</div>
-        <div class="value ok">100%</div>
-      </div>
-      <div class="card">
-        <div class="label">Latest Run</div>
-        <div class="value ok">100%</div>
-        <div class="sub">14 passed, 0 failed, 0 skipped</div>
-      </div>
-      <div class="card">
-        <div class="label">Browsers (Latest)</div>
-        <div class="value">2</div>
-        <div class="chips"><span class="chip">Chrome: 7/7</span><span class="chip">Firefox: 7/7</span></div>
-      </div>
-    </div>
+  <div class="cards">
+    <div class="card"><div class="l">Total Runs</div><div class="v">2</div></div>
+    <div class="card"><div class="l">Average Pass Rate</div><div class="v">100%</div></div>
+    <div class="card"><div class="l">Latest Pass Rate</div><div class="v">100%</div></div>
+    <div class="card"><div class="l">Latest Passed</div><div class="v">14</div></div>
+    <div class="card"><div class="l">Latest Failed</div><div class="v">0</div></div>
+  </div>
 
-    <div class="trend">
-      <div class="label">Pass Rate Trend (up to last 20 runs)</div>
-      <div class="bars"><div class="bar-wrap"><div class="bar" style="height:100%;background:var(--ok)"></div></div></div>
+  <div class="mid">
+    <div class="panel">
+      <div class="l">Pass Rate Trend (Last 2 runs)</div>
+      <div class="bars"><div class="b"><span style="height:100%;background:#16a34a"></span></div><div class="b"><span style="height:100%;background:#16a34a"></span></div></div>
     </div>
-
-    <div class="table">
-      <table>
-        <thead>
-          <tr>
-            <th>Run</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Pass Rate</th>
-            <th>Passed / Total</th>
-            <th>Browsers</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-        <tr>
-          <td>#1</td>
-          <td>07/03/2026 14:00</td>
-          <td><span class="badge ok">SUCCESS</span></td>
-          <td>100%</td>
-          <td>14 / 14</td>
-          <td>Chrome, Firefox</td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="panel" style="text-align:center">
+      <div class="l">Latest Quality</div>
+      <div class="ring" style="background:conic-gradient(#16a34a 0 100%, #e5e7eb 100% 100%);"></div>
+      <div class="ringv">100%</div>
+      <div class="sub">Browsers: Chrome, Firefox</div>
     </div>
   </div>
+
+  <div class="table">
+    <table>
+      <thead><tr><th>Run</th><th>Date</th><th>Status</th><th>Pass Rate</th><th>Passed/Total</th><th>Browsers</th></tr></thead>
+      <tbody><tr>
+      <td>#2</td>
+      <td>07/03/2026 14:10</td>
+      <td><span class="badge ok">SUCCESS</span></td>
+      <td>100%</td>
+      <td>14/14</td>
+      <td>Chrome, Firefox</td>
+    </tr><tr>
+      <td>#1</td>
+      <td>07/03/2026 14:00</td>
+      <td><span class="badge ok">SUCCESS</span></td>
+      <td>100%</td>
+      <td>14/14</td>
+      <td>Chrome, Firefox</td>
+    </tr></tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>
