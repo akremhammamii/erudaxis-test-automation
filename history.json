@@ -1,0 +1,29 @@
+[
+  {
+    "runNumber": 1,
+    "timestamp": "2026-03-07T14:00:20.103Z",
+    "date": "07/03/2026 14:00",
+    "totalTests": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": 100,
+    "status": "success",
+    "browsers": "Chrome, Firefox",
+    "browserCount": 2,
+    "byBrowser": {
+      "Chrome": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0
+      },
+      "Firefox": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0
+      }
+    }
+  }
+]
