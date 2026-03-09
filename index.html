@@ -7,7 +7,7 @@
 @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:10px}.logo-icon{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;box-shadow:0 0 20px rgba(0,229,255,.28)}.logo{font-weight:800;font-size:24px;background:linear-gradient(90deg,#fff,var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.meta{font-family:'JetBrains Mono',monospace;color:var(--mu);font-size:12px}.tabs{display:flex;gap:8px;border-bottom:1px solid var(--bd);padding-bottom:12px;margin:14px 0}.tabs a{font-family:'JetBrains Mono',monospace;color:var(--mu);text-decoration:none;border:1px solid var(--bd);background:var(--sf2);padding:5px 12px;border-radius:7px;transition:.15s}.tabs a.on,.tabs a:hover{color:var(--ac);border-color:var(--ac)}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.card{position:relative;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px;animation:up .35s ease both;overflow:hidden}.card:before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),transparent)}.lbl{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase}.val{font-size:34px;font-weight:800;line-height:1;margin-top:5px}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}.spark{width:88px;height:24px}.spark polyline{fill:none;stroke:var(--ac);stroke-width:2;stroke-linecap:round}
-.latest{margin-top:12px;background:var(--sf);border:1px solid var(--bd);border-left:3px solid var(--ok);border-radius:10px;padding:11px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.badge{padding:2px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700}.badge.ok{background:rgba(16,185,129,.16);color:var(--ok)}.badge.bad{background:rgba(244,63,94,.16);color:var(--bad)}.chip{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid var(--bd);border-radius:5px;background:var(--sf2);padding:2px 6px;color:var(--ac)}
+.latest{margin-top:12px;background:var(--sf);border:1px solid var(--bd);border-left:3px solid var(--bad);border-radius:10px;padding:11px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.badge{padding:2px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700}.badge.ok{background:rgba(16,185,129,.16);color:var(--ok)}.badge.bad{background:rgba(244,63,94,.16);color:var(--bad)}.chip{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid var(--bd);border-radius:5px;background:var(--sf2);padding:2px 6px;color:var(--ac)}
 .panel{margin-top:12px;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:12px;animation:up .35s ease both}.title{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mu);text-transform:uppercase;margin-bottom:8px;letter-spacing:.06em}.trend-svg{width:100%;height:150px}.trend-svg polyline{fill:none;stroke:var(--ac);stroke-width:3;stroke-linecap:round}.trend-svg circle{fill:var(--ac)}.trend-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:8px}.tbox{background:var(--sf2);border:1px solid var(--bd);border-radius:8px;padding:7px}.tlabel{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase}.tvalue{font-size:18px;font-weight:800}.tchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tchip{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mu);background:var(--sf2);border:1px solid var(--bd);border-radius:6px;padding:3px 6px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:12px}.brow{display:flex;align-items:center;gap:8px;margin:7px 0}.bar{flex:1;height:7px;border-radius:4px;background:var(--sf2);overflow:hidden;border:1px solid var(--bd)}.fill{height:100%}
 table{width:100%;border-collapse:collapse}th,td{padding:8px 10px;border-bottom:1px solid var(--bd);font-size:13px;text-align:left}th{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase}tbody tr{animation:up .28s ease both}tbody tr:hover{background:rgba(0,229,255,.04)}input,select{font-family:'JetBrains Mono',monospace;background:var(--sf2);color:var(--txt);border:1px solid var(--bd);border-radius:6px;padding:4px 8px}.mono{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mu)}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
@@ -15,22 +15,33 @@ table{width:100%;border-collapse:collapse}th,td{padding:8px 10px;border-bottom:1
 a{color:var(--ac);text-decoration:none}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
 </style></head><body><div class="wrap">
-<div class="top"><div class="brand"><div class="logo-icon">TD</div><div><div class="logo">Test Dashboard</div><div class="meta">akremhammamii/erudaxis-test-automation</div></div></div><div class="meta">updated 2026-03-09 11:10:08 UTC</div></div>
+<div class="top"><div class="brand"><div class="logo-icon">TD</div><div><div class="logo">Test Dashboard</div><div class="meta">akremhammamii/erudaxis-test-automation</div></div></div><div class="meta">updated 2026-03-09 11:53:34 UTC</div></div>
 <div class="tabs"><a class="on" href="index.html">Overview</a><a href="tests.html">Test Analytics</a></div>
 <div class="kpis">
-<div class="card"><div class="lbl">Total Runs</div><div class="val">13</div></div>
+<div class="card"><div class="lbl">Total Runs</div><div class="val">14</div></div>
 <div class="card"><div class="lbl">Passed Runs</div><div class="val ok">8</div></div>
-<div class="card"><div class="lbl">Failed Runs</div><div class="val bad">5</div></div>
-<div class="card"><div class="lbl">Pass Rate</div><div class="val">62%</div><div><svg viewBox="0 0 88 24" class="spark"><polyline points="0,2 13,22 25,22 38,22 50,22 63,22 75,2 88,2"></polyline></svg></div></div>
-<div class="card"><div class="lbl">Flaky Tests</div><div class="val warn">30</div></div>
+<div class="card"><div class="lbl">Failed Runs</div><div class="val bad">6</div></div>
+<div class="card"><div class="lbl">Pass Rate</div><div class="val">58%</div><div><svg viewBox="0 0 88 24" class="spark"><polyline points="0,22 13,22 25,22 38,22 50,22 63,2 75,2 88,19"></polyline></svg></div></div>
+<div class="card"><div class="lbl">Flaky Tests</div><div class="val warn">35</div></div>
 </div>
-<div class="latest"><span class="badge ok">PASS</span><span class="chip">main</span><span class="mono">chrome</span><span class="ok">14 passed</span><span class="bad">0 failed</span><span class="warn">0 flaky</span><span class="mono">1m 10s</span><a href="https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22850570321" target="_blank" rel="noreferrer">Latest report</a></div>
-<div class="panel"><div class="title">Execution Stats (last 7 runs)</div><div class="trend-stats"><div class="tbox"><div class="tlabel">Global Pass</div><div class="tvalue ok">29%</div></div><div class="tbox"><div class="tlabel">Global Fail</div><div class="tvalue bad">41%</div></div><div class="tbox"><div class="tlabel">Flaky Rate</div><div class="tvalue warn">31%</div></div><div class="tbox"><div class="tlabel">Avg Duration</div><div class="tvalue">2m 4s</div></div><div class="tbox"><div class="tlabel">Scenarios</div><div class="tvalue">98</div></div><div class="tbox"><div class="tlabel">Stability Score</div><div class="tvalue bad">13%</div></div></div><div class="tchips"><span class="tchip">Passed: 28</span><span class="tchip">Failed: 40</span><span class="tchip">Flaky: 30</span><span class="tchip">Runs used: 7</span></div></div>
+<div class="latest"><span class="badge bad">FAIL</span><span class="chip">main</span><span class="mono">chrome</span><span class="ok">2 passed</span><span class="bad">7 failed</span><span class="warn">5 flaky</span><span class="mono">1m 55s</span><a href="https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22852079049" target="_blank" rel="noreferrer">Latest report</a></div>
+<div class="panel"><div class="title">Execution Stats (last 7 runs)</div><div class="trend-stats"><div class="tbox"><div class="tlabel">Global Pass</div><div class="tvalue ok">31%</div></div><div class="tbox"><div class="tlabel">Global Fail</div><div class="tvalue bad">40%</div></div><div class="tbox"><div class="tlabel">Flaky Rate</div><div class="tvalue warn">30%</div></div><div class="tbox"><div class="tlabel">Avg Duration</div><div class="tvalue">1m 59s</div></div><div class="tbox"><div class="tlabel">Scenarios</div><div class="tvalue">98</div></div><div class="tbox"><div class="tlabel">Stability Score</div><div class="tvalue bad">16%</div></div></div><div class="tchips"><span class="tchip">Passed: 30</span><span class="tchip">Failed: 39</span><span class="tchip">Flaky: 29</span><span class="tchip">Runs used: 7</span></div></div>
 <div class="split">
-<div class="panel"><div class="title">Browser Breakdown</div><div class="brow"><div class="mono" style="min-width:90px">chrome</div><div class="bar"><div class="fill" style="width:62%;background:var(--warn)"></div></div><div class="mono" style="min-width:40px;text-align:right">62%</div><div class="mono" style="min-width:84px;text-align:right">112P 40F 30FL</div></div></div>
-<div class="panel"><div class="title">Branch Breakdown</div><div class="brow"><div class="mono" style="min-width:90px">main</div><div class="bar"><div class="fill" style="width:62%;background:var(--warn)"></div></div><div class="mono" style="min-width:40px;text-align:right">62%</div><div class="mono" style="min-width:84px;text-align:right">112P 40F 30FL</div></div></div>
+<div class="panel"><div class="title">Browser Breakdown</div><div class="brow"><div class="mono" style="min-width:90px">chrome</div><div class="bar"><div class="fill" style="width:58%;background:var(--bad)"></div></div><div class="mono" style="min-width:40px;text-align:right">58%</div><div class="mono" style="min-width:84px;text-align:right">114P 47F 35FL</div></div></div>
+<div class="panel"><div class="title">Branch Breakdown</div><div class="brow"><div class="mono" style="min-width:90px">main</div><div class="bar"><div class="fill" style="width:58%;background:var(--bad)"></div></div><div class="mono" style="min-width:40px;text-align:right">58%</div><div class="mono" style="min-width:84px;text-align:right">114P 47F 35FL</div></div></div>
 </div>
-<div class="panel"><div class="title">Run History</div><div class="controls"><span class="mono" id="count">13 runs</span><select id="branch" onchange="filterRuns()"><option value="all">All branches</option><option value="main">main</option></select><select id="browser" onchange="filterRuns()"><option value="all">All browsers</option><option value="chrome, firefox">chrome</option></select><input id="day" type="date" onchange="filterRuns()"></div><table><thead><tr><th>Status</th><th>Date</th><th>Branch</th><th>Browser</th><th>Passed</th><th>Failed</th><th>Flaky</th><th>Duration</th><th>Rate</th><th>Report</th></tr></thead><tbody id="runRows"><tr data-branch="main" data-browser="chrome, firefox" data-date="2026-03-09">
+<div class="panel"><div class="title">Run History</div><div class="controls"><span class="mono" id="count">14 runs</span><select id="branch" onchange="filterRuns()"><option value="all">All branches</option><option value="main">main</option></select><select id="browser" onchange="filterRuns()"><option value="all">All browsers</option><option value="chrome">chrome</option><option value="firefox">firefox</option></select><input id="day" type="date" onchange="filterRuns()"></div><table><thead><tr><th>Status</th><th>Date</th><th>Branch</th><th>Browser</th><th>Passed</th><th>Failed</th><th>Flaky</th><th>Duration</th><th>Rate</th><th>Report</th></tr></thead><tbody id="runRows"><tr data-branch="main" data-browser="chrome, firefox" data-date="2026-03-09">
+    <td><span class="badge bad">FAIL</span></td>
+    <td class="mono">2026-03-09 11:53:34 UTC</td>
+    <td><span class="chip">main</span></td>
+    <td>chrome</td>
+    <td class="ok">2</td>
+    <td class="bad">7</td>
+    <td class="warn">5</td>
+    <td class="mono">1m 55s</td>
+    <td>14%</td>
+    <td><a href="https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22852079049" target="_blank" rel="noreferrer">Open</a></td>
+  </tr><tr data-branch="main" data-browser="chrome, firefox" data-date="2026-03-09">
     <td><span class="badge ok">PASS</span></td>
     <td class="mono">2026-03-09 11:10:08 UTC</td>
     <td><span class="chip">main</span></td>
@@ -175,44 +186,250 @@ a{color:var(--ac);text-decoration:none}
     <td><a href="https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22800581152" target="_blank" rel="noreferrer">Open</a></td>
   </tr></tbody></table></div>
 <div class="panel"><div class="title">Failure Archive</div><div class="controls"><input id="failSearch" placeholder="Search failing test" oninput="filterFailures()"></div><div id="failList"><div class="fcard" data-title="project management :: scenario">
-    <div class="fhead" onclick="toggleFail(0)"><span class="sev">critical</span><span class="ftitle">Project Management :: Scenario</span><span class="mono">30 fails | 58% pass</span><span id="ficon-0">+</span></div>
-    <div class="fbody" id="fbody-0" style="display:none"><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
+    <div class="fhead" onclick="toggleFail(0)"><span class="sev">critical</span><span class="ftitle">Project Management :: Scenario</span><span class="mono">12 fails | 54% pass</span><span id="ficon-0">+</span></div>
+    <div class="fbody" id="fbody-0" style="display:none"><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 11:53:34 UTC</span></div><pre>java.lang.RuntimeException: Element non visible apres timeout : Expected condition failed: waiting for visibility of element found by By.id: sign-in-email-input, but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;#sign\-in\-email\-input&quot;}.
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2642, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 01a56b2c4d54d0c31333e00530e50df7
+	at com.e2e.erudaxis.pages.BasePage.type(BasePage.java:74)
+	at com.e2e.erudaxis.pages.LoginPage.enterEmail(LoginPage.java:46)
+	at com.e2e.erudaxis.pages.LoginPage.enterValidEmail(LoginPage.java:65)
+	at com.e2e.erudaxis.pages.LoginPage.loginWithValidUser(LoginPage.java:77)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:32)
+	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
+Caused by: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.id: sign-in-email-input, but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;#sign\-in\-email\-input&quot;}.
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2642, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 01a56b2c4d54d0c31333e00530e50df7
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
+	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
+	at com.e2e.erudaxis.pages.BasePage.type(BasePage.java:68)
+	at com.e2e.erudaxis.pages.LoginPage.enterEmail(LoginPage.java:46)
+	at com.e2e.erudaxis.pages.LoginPage.enterValidEmail(LoginPage.java:65)
+	at com.e2e.erudaxis.pages.LoginPage.loginWithValidUser(LoginPage.java:77)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:32)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at io.cucumber.java.Invoker.doInvoke(Invoker.java:66)
+	at io.cucumber.java.Invoker.invoke(Invoker.java:24)
+	at io.cucumber.java.AbstractGlueDefinition.invokeMethod(AbstractGlueDefinition.java:47)
+	at io.cucumber.java.JavaStepDefinition.execute(JavaStepDefinition.java:29)
+	at io.cucumber.core.runner.CoreStepDefinition.execute(CoreStepDefinition.java:66)
+	at io.cucumber.core.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:62)
+	at io.cucumber.core.runner.ExecutionMode$1.execute(ExecutionMode.java:10)
+	at io.cucumber.core.runner.TestStep.executeStep(TestStep.java:81)
+	at io.cucumber.core.runner.TestStep.run(TestStep.java:53)
+	at io.cucumber.core.runner.PickleStepTestStep.run(PickleStepTestStep.java:51)
+	at io.cucumber.core.runner.TestCase.run(TestCase.java:84)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:75)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:76)
+	at org.junit.platform.suite.engine.SuiteLauncher.execute(SuiteLauncher.java:63)
+	at org.junit.platform.suite.engine.SuiteTestDescriptor.executeTests(SuiteTestDescriptor.java:168)
+	at org.junit.platform.suite.engine.SuiteTestDescriptor.execute(SuiteTestDescriptor.java:137)
+	at org.junit.platform.suite.engine.SuiteTestEngine.lambda$execute$0(SuiteTestEngine.java:73)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at java.base/java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1845)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at org.junit.platform.suite.engine.SuiteTestEngine.execute(SuiteTestEngine.java:73)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 11:53:34 UTC</span></div><pre>java.lang.RuntimeException: Element non visible apres timeout : Expected condition failed: waiting for visibility of element found by By.id: sign-in-email-input, but... org.openqa.selenium.NoSuchElementException: Unable to locate element: #sign\-in\-email\-input.
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 5364, moz:profile: /tmp/rust_mozprofilek7zAti, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
+Session ID: 8f706bc8-5270-4177-820b-3644169f47dc
+	at com.e2e.erudaxis.pages.BasePage.type(BasePage.java:74)
+	at com.e2e.erudaxis.pages.LoginPage.enterEmail(LoginPage.java:46)
+	at com.e2e.erudaxis.pages.LoginPage.enterValidEmail(LoginPage.java:65)
+	at com.e2e.erudaxis.pages.LoginPage.loginWithValidUser(LoginPage.java:77)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:32)
+	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
+Caused by: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.id: sign-in-email-input, but... org.openqa.selenium.NoSuchElementException: Unable to locate element: #sign\-in\-email\-input.
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 5364, moz:profile: /tmp/rust_mozprofilek7zAti, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
+Session ID: 8f706bc8-5270-4177-820b-3644169f47dc
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
+	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
+	at com.e2e.erudaxis.pages.BasePage.type(BasePage.java:68)
+	at com.e2e.erudaxis.pages.LoginPage.enterEmail(LoginPage.java:46)
+	at com.e2e.erudaxis.pages.LoginPage.enterValidEmail(LoginPage.java:65)
+	at com.e2e.erudaxis.pages.LoginPage.loginWithValidUser(LoginPage.java:77)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:32)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at io.cucumber.java.Invoker.doInvoke(Invoker.java:66)
+	at io.cucumber.java.Invoker.invoke(Invoker.java:24)
+	at io.cucumber.java.AbstractGlueDefinition.invokeMethod(AbstractGlueDefinition.java:47)
+	at io.cucumber.java.JavaStepDefinition.execute(JavaStepDefinition.java:29)
+	at io.cucumber.core.runner.CoreStepDefinition.execute(CoreStepDefinition.java:66)
+	at io.cucumber.core.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:62)
+	at io.cucumber.core.runner.ExecutionMode$1.execute(ExecutionMode.java:10)
+	at io.cucumber.core.runner.TestStep.executeStep(TestStep.java:81)
+	at io.cucumber.core.runner.TestStep.run(TestStep.java:53)
+	at io.cucumber.core.runner.PickleStepTestStep.run(PickleStepTestStep.java:51)
+	at io.cucumber.core.runner.TestCase.run(TestCase.java:84)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:75)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:76)
+	at org.junit.platform.suite.engine.SuiteLauncher.execute(SuiteLauncher.java:63)
+	at org.junit.platform.suite.engine.SuiteTestDescriptor.executeTests(SuiteTestDescriptor.java:168)
+	at org.junit.platform.suite.engine.SuiteTestDescriptor.execute(SuiteTestDescriptor.java:137)
+	at org.junit.platform.suite.engine.SuiteTestEngine.lambda$execute$0(SuiteTestEngine.java:73)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at java.base/java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1845)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at org.junit.platform.suite.engine.SuiteTestEngine.execute(SuiteTestEngine.java:73)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
 (tried for 15 seconds with 500 milliseconds interval)
 Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
 System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
 Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2506, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
 Session ID: b131d795eb857a85a73d3559fea01787
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
-	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2723, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: b9d9ccc5bfc6366a9767ecb9d99c5896
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
-	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2937, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 615ca289d4fb88aea94778f47d543ba4
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
 	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
@@ -236,36 +453,6 @@ Session ID: 4a3a401c-519a-4613-9612-690957ee201d
 	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
 	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
 	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)].
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.firefox.FirefoxDriver
-Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 4873, moz:profile: /tmp/rust_mozprofileywHdeD, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
-Session ID: c0155c35-b108-4381-a4ef-2159d3ccbaac
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
-	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)].
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.firefox.FirefoxDriver
-Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 5306, moz:profile: /tmp/rust_mozprofileVOp3xz, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
-Session ID: 8ce29c51-9f63-4b43-b39a-aeee9d2997a4
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
-	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
 </pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:35:37 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
 (tried for 15 seconds with 500 milliseconds interval)
 Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
@@ -281,43 +468,73 @@ Session ID: 5854c4fe3501d4f4e624eb47d633b6e1
 	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
 	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
 	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:35:37 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2729, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: d225e0222ad8ea10155db204f51204c7
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
-	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:35:37 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2943, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: cd269b36d45500bf83ead191aed95985
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
-	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
 </pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 10:35:37 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)].
 (tried for 15 seconds with 500 milliseconds interval)
 Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
 System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
 Driver info: org.openqa.selenium.firefox.FirefoxDriver
-Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 4441, moz:profile: /tmp/rust_mozprofilentJ1Q4, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
-Session ID: a41e92c7-bfd8-49bd-bf23-7afaf6018663
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 4902, moz:profile: /tmp/rust_mozprofilebvrPUY, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
+Session ID: 0df536af-355f-4f87-82f0-e1cabba4e659
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
+	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
+	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:27:15 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2508, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: ce138b7024160d1c2a699f46004ba566
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
+	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
+	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 10:27:15 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)].
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 4416, moz:profile: /tmp/rust_mozprofilecixCT6, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
+Session ID: 09a73f61-1d77-472b-ae96-a4abd8e43b0c
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
+	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
+	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:05:14 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2491, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 4a42230d0ce44d07061a568659b68fa8
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
+	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
+	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
+	at com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)
+	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 10:05:14 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)].
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
+System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 4452, moz:profile: /tmp/rust_mozprofileskSwsx, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
+Session ID: 34687b85-4328-40a7-aaf1-a0374547f48d
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
 	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
@@ -328,8 +545,24 @@ Session ID: a41e92c7-bfd8-49bd-bf23-7afaf6018663
 	at ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)
 </pre></div></div>
   </div><div class="fcard" data-title="user authentication :: successful login with valid credentials">
-    <div class="fhead" onclick="toggleFail(1)"><span class="sev">critical</span><span class="ftitle">User Authentication :: Successful login with valid credentials</span><span class="mono">10 fails | 58% pass</span><span id="ficon-1">+</span></div>
-    <div class="fbody" id="fbody-1" style="display:none"><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
+    <div class="fhead" onclick="toggleFail(1)"><span class="sev">critical</span><span class="ftitle">User Authentication :: Successful login with valid credentials</span><span class="mono">12 fails | 54% pass</span><span id="ficon-1">+</span></div>
+    <div class="fbody" id="fbody-1" style="display:none"><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 11:53:34 UTC</span></div><pre>org.opentest4j.AssertionFailedError: L&#39;utilisateur devrait être sur la page de connexion ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.e2e.erudaxis.stepdefinitions.LoginSteps.i_am_on_the_login_page(LoginSteps.java:25)
+	at ✽.I am on the login page(classpath:features/login.feature:9)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 11:53:34 UTC</span></div><pre>org.opentest4j.AssertionFailedError: L&#39;utilisateur devrait être sur la page de connexion ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.e2e.erudaxis.stepdefinitions.LoginSteps.i_am_on_the_login_page(LoginSteps.java:25)
+	at ✽.I am on the login page(classpath:features/login.feature:9)
+</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 10:40:41 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
 (tried for 15 seconds with 500 milliseconds interval)
 Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
 System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
@@ -441,36 +674,6 @@ System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#3
 Driver info: org.openqa.selenium.firefox.FirefoxDriver
 Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 5771, moz:profile: /tmp/rust_mozprofilep1vMie, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
 Session ID: ce4d1f3a-40b2-45e7-8db9-47442d0ae1f1
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.LoginSteps.i_select_the_configured_department(LoginSteps.java:70)
-	at ✽.I select the configured department(classpath:features/login.feature:13)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">chrome</span> <span class="mono">2026-03-09 09:50:34 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)]&quot;}.
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 3177, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 66fc56cbb5ab706076800d9d5a35daae
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
-	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)
-	at com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)
-	at com.e2e.erudaxis.stepdefinitions.LoginSteps.i_select_the_configured_department(LoginSteps.java:70)
-	at ✽.I select the configured department(classpath:features/login.feature:13)
-</pre></div><div class="hrow"><div><span class="badge bad">FAILED</span> <span class="chip">main</span> <span class="mono">firefox</span> <span class="mono">2026-03-09 09:50:34 UTC</span></div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), &#39;Établissement collège&#39;)]/ancestor::div[contains(@class, &#39;css-1ro84om&#39;)].
-(tried for 15 seconds with 500 milliseconds interval)
-Build info: version: &#39;4.40.0&#39;, revision: &#39;b3333f1&#39;
-System info: os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;6.14.0-1017-azure&#39;, java.version: &#39;17.0.18&#39;
-Driver info: org.openqa.selenium.firefox.FirefoxDriver
-Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 5822, moz:profile: /tmp/rust_mozprofileBCgZyo, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}
-Session ID: 37d243ac-14cd-4667-a9f8-286a3d0cc35c
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)
 	at com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)
