@@ -280,6 +280,35 @@ function browserLabel(v) {
   return lower;
 }
 
+function splitBrowsers(raw) {
+  return String(raw || '')
+    .split(',')
+    .map((v) => browserLabel(v.trim()))
+    .filter(Boolean);
+}
+
+function collectBrowserOptions(runs, testRuns) {
+  const values = new Set();
+
+  for (const run of runs || []) {
+    for (const browser of splitBrowsers(run.browser)) values.add(browser);
+  }
+
+  for (const run of testRuns || []) {
+    for (const test of run.tests || []) {
+      values.add(browserLabel(test.browser || run.browser));
+    }
+  }
+
+  const cleaned = Array.from(values).filter((v) => v && v !== 'all' && v !== 'unknown').sort();
+  if (cleaned.length) return cleaned;
+
+  // Fallback for CI matrix setup when historical browser labels are sparse.
+  const fallback = ['chrome', 'firefox'];
+  const fromValues = Array.from(values).filter((v) => v && v !== 'all' && v !== 'unknown');
+  return [...new Set([...fallback, ...fromValues])].sort();
+}
+
 function computeRate(passed, failed, flaky) {
   const total = Number(passed || 0) + Number(failed || 0) + Number(flaky || 0);
   return total ? Math.round((Number(passed || 0) / total) * 100) : 0;
@@ -329,7 +358,7 @@ function renderIndexPage(runsInput, testRunsInput, repo) {
   const last7FlakyRate = last7TotalTests ? Math.round((last7Flaky / last7TotalTests) * 100) : 0;
   const stabilityScore = Math.max(0, last7PassRate - Math.round(last7FlakyRate / 2));
   const branchOptions = [...new Set(runs.map((r) => r.branch))].filter(Boolean).sort();
-  const browserOptions = [...new Set(runs.map((r) => r.browser))].filter(Boolean).sort();
+  const browserOptions = collectBrowserOptions(runs, testRuns);
 
   const byBrowser = aggregateRuns(runs, (r) => browserLabel(r.browser));
   const byBranch = aggregateRuns(runs, (r) => r.branch);
@@ -420,7 +449,7 @@ function renderBreakdown(items) {
 function buildFailureArchive(testRuns) {
   const map = new Map();
   for (const run of testRuns) {
-    for (const test of run.tests || []) {
+    for (const test of dedupeRunTests(run)) {
       if (test.status !== 'failed') continue;
       if (!map.has(test.title)) map.set(test.title, { title: test.title, failed: 0, passed: 0, flaky: 0, history: [] });
       const e = map.get(test.title);
@@ -436,7 +465,7 @@ function buildFailureArchive(testRuns) {
     }
   }
   for (const run of testRuns) {
-    for (const test of run.tests || []) {
+    for (const test of dedupeRunTests(run)) {
       const e = map.get(test.title);
       if (!e) continue;
       if (test.status === 'passed') e.passed += 1;
@@ -544,7 +573,7 @@ function miniBreakdown(items) {
 function buildTestsStats(testRuns) {
   const testsMap = new Map();
   for (const run of testRuns) {
-    for (const t of run.tests || []) {
+    for (const t of dedupeRunTests(run)) {
       if (!testsMap.has(t.title)) {
         testsMap.set(t.title, {
           title: t.title,
@@ -596,6 +625,34 @@ function buildTestsStats(testRuns) {
   const suites = Array.from(suiteMap.values()).map((s) => ({ ...s, passRate: computeRate(s.passed, s.failed, s.flaky) })).sort((a, b) => b.failed - a.failed);
 
   return { tests, suites };
+}
+
+function dedupeRunTests(run) {
+  const deduped = new Map();
+  for (const test of run.tests || []) {
+    const normalizedBrowser = browserLabel(test.browser || run.browser || 'unknown');
+    const key = `${test.title || 'Untitled Test'}||${test.file || 'unknown'}||${normalizedBrowser}`;
+    const current = deduped.get(key);
+    if (!current) {
+      deduped.set(key, { ...test, browser: normalizedBrowser });
+      continue;
+    }
+    if (statusWeight(test.status) > statusWeight(current.status)) {
+      deduped.set(key, { ...current, ...test, browser: normalizedBrowser });
+      continue;
+    }
+    if (statusWeight(test.status) === statusWeight(current.status)) {
+      const chosen = Number(test.duration || 0) > Number(current.duration || 0) ? test : current;
+      deduped.set(key, { ...chosen, browser: normalizedBrowser });
+    }
+  }
+  return Array.from(deduped.values());
+}
+
+function statusWeight(status) {
+  if (status === 'failed') return 3;
+  if (status === 'flaky') return 2;
+  return 1;
 }
 
 function addMini(map, key, status) {
