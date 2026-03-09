@@ -18,7 +18,7 @@ public class DepartmentSelectionPage extends BasePopup {
 
     // Map dynamique pour gerer facilement les departements
     private static final Map<String, By> DEPARTMENTS = Map.of(
-            "college", By.xpath("//pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')]") ,
+            "college", By.xpath("//span[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')]") ,
             "lycee",  By.xpath("//span[contains(text(), 'Établissement Lycée')]/ancestor::div[contains(@class, 'css-1ro84om')]")
     );
 
