@@ -1,5 +1,20 @@
 [
   {
+    "runId": "22849284357",
+    "runNumber": "23",
+    "branch": "main",
+    "browser": "chrome, firefox",
+    "date": "2026-03-09T10:35:37.477Z",
+    "passed": 0,
+    "failed": 8,
+    "flaky": 6,
+    "total": 14,
+    "duration": 147974,
+    "rate": 0,
+    "status": "FAIL",
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22849284357"
+  },
+  {
     "runId": "22848968122",
     "runNumber": "22",
     "branch": "main",
@@ -12,7 +27,7 @@
     "duration": 145502,
     "rate": 0,
     "status": "FAIL",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22848968122"
   },
   {
     "runId": "22848141875",
@@ -27,7 +42,7 @@
     "duration": 144381,
     "rate": 0,
     "status": "FAIL",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22848141875"
   },
   {
     "runId": "22847563648",
@@ -42,7 +57,7 @@
     "duration": 144993,
     "rate": 0,
     "status": "FAIL",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22847563648"
   },
   {
     "runId": "22847277053",
@@ -57,7 +72,7 @@
     "duration": 66470,
     "rate": 100,
     "status": "PASS",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22847277053"
   },
   {
     "runId": "22847020134",
@@ -72,7 +87,7 @@
     "duration": 68003,
     "rate": 100,
     "status": "PASS",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22847020134"
   },
   {
     "runId": "22838072458",
@@ -87,7 +102,7 @@
     "duration": 74117,
     "rate": 100,
     "status": "PASS",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22838072458"
   },
   {
     "runId": "22813577685",
@@ -102,7 +117,7 @@
     "duration": 68076,
     "rate": 100,
     "status": "PASS",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22813577685"
   },
   {
     "runId": "22800722833",
@@ -117,20 +132,21 @@
     "duration": 71105,
     "rate": 100,
     "status": "PASS",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22800722833"
   },
   {
-    "id": "22800581152",
+    "runId": "22800581152",
     "runNumber": "14",
     "branch": "main",
     "browser": "chrome, firefox",
-    "status": "PASS",
+    "date": "2026-03-07T14:15:18.570Z",
     "passed": 14,
     "failed": 0,
+    "flaky": 0,
     "total": 14,
     "duration": 70,
     "rate": 100,
-    "date": "2026-03-07T14:15:18.570Z",
-    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/"
+    "status": "PASS",
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22800581152"
   }
 ]
