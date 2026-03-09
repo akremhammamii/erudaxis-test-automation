@@ -1,5 +1,129 @@
 [
   {
+    "runId": "22848141875",
+    "runNumber": "21",
+    "branch": "main",
+    "browser": "chrome, firefox",
+    "date": "2026-03-09T10:05:14.363Z",
+    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/",
+    "tests": [
+      {
+        "title": "Project Management :: Scenario",
+        "status": "failed",
+        "duration": 18267,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')]\"}.\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.chrome.ChromeDriver\nCapabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2491, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}\nSession ID: 4a42230d0ce44d07061a568659b68fa8\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)\n\tat ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)\n"
+        ],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Search for a project by title",
+        "status": "flaky",
+        "duration": 0,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "failed",
+        "duration": 18118,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')]\"}.\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.chrome.ChromeDriver\nCapabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2705, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}\nSession ID: 45babd733ecabc7151ecc97d1ad4d6b7\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)\n\tat ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)\n"
+        ],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Filter projects by responsable",
+        "status": "flaky",
+        "duration": 1,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "failed",
+        "duration": 18190,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')]\"}.\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.chrome.ChromeDriver\nCapabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 2918, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}\nSession ID: b13317bdaca097b56cf9ffc5ec76bf6e\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)\n\tat ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)\n"
+        ],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Create a new project",
+        "status": "flaky",
+        "duration": 1,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "User Authentication :: Successful login with valid credentials",
+        "status": "failed",
+        "duration": 18205,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')]\"}.\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.chrome.ChromeDriver\nCapabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 145.0.7632.116, chrome: {chromedriverVersion: 145.0.7632.117 (de4e5d6e13b..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:9222}, goog:processID: 3137, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:9222/devtool..., se:cdpVersion: 145.0.7632.116, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}\nSession ID: 75dc63d4480efe081dfd3662783b7250\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.LoginSteps.i_select_the_configured_department(LoginSteps.java:70)\n\tat ✽.I select the configured department(classpath:features/login.feature:13)\n"
+        ],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "failed",
+        "duration": 18219,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')].\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.firefox.FirefoxDriver\nCapabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 4452, moz:profile: /tmp/rust_mozprofileskSwsx, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}\nSession ID: 34687b85-4328-40a7-aaf1-a0374547f48d\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)\n\tat ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)\n"
+        ],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Search for a project by title",
+        "status": "flaky",
+        "duration": 0,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "failed",
+        "duration": 17629,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')].\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.firefox.FirefoxDriver\nCapabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 4903, moz:profile: /tmp/rust_mozprofile7DmzuK, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}\nSession ID: 075b536d-483c-4b67-b8f5-e62d05f8066d\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)\n\tat ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)\n"
+        ],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Filter projects by responsable",
+        "status": "flaky",
+        "duration": 1,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "failed",
+        "duration": 18092,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')].\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.firefox.FirefoxDriver\nCapabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 5327, moz:profile: /tmp/rust_mozprofileXDHcfv, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}\nSession ID: e7cec555-ae09-4461-ae51-4e199da0ad10\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.CommonSteps.i_am_logged_in_as_a_valid_user(CommonSteps.java:37)\n\tat ✽.I am logged in as a valid user(classpath:features/listOfProjects.feature:8)\n"
+        ],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Create a new project",
+        "status": "flaky",
+        "duration": 1,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "User Authentication :: Successful login with valid credentials",
+        "status": "failed",
+        "duration": 17657,
+        "errors": [
+          "org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.xpath: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')], but... org.openqa.selenium.NoSuchElementException: Unable to locate element: //pan[contains(text(), 'Établissement collège')]/ancestor::div[contains(@class, 'css-1ro84om')].\n(tried for 15 seconds with 500 milliseconds interval)\nBuild info: version: '4.40.0', revision: 'b3333f1'\nSystem info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.14.0-1017-azure', java.version: '17.0.18'\nDriver info: org.openqa.selenium.firefox.FirefoxDriver\nCapabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 148.0, moz:accessibilityChecks: false, moz:buildID: 20260225164830, moz:geckodriverVersion: 0.36.0, moz:headless: true, moz:platformVersion: 6.14.0-1017-azure, moz:processID: 5771, moz:profile: /tmp/rust_mozprofilep1vMie, moz:shutdownTimeout: 60000, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, userAgent: Mozilla/5.0 (X11; Ubuntu; L...}\nSession ID: ce4d1f3a-40b2-45e7-8db9-47442d0ae1f1\n\tat org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)\n\tat org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:231)\n\tat com.e2e.erudaxis.utils.WaitUtils.waitForVisibility(WaitUtils.java:32)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.clickWithJavaScript(DepartmentSelectionPage.java:40)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectDepartment(DepartmentSelectionPage.java:72)\n\tat com.e2e.erudaxis.pages.DepartmentSelectionPage.selectConfiguredDepartment(DepartmentSelectionPage.java:82)\n\tat com.e2e.erudaxis.stepdefinitions.LoginSteps.i_select_the_configured_department(LoginSteps.java:70)\n\tat ✽.I select the configured department(classpath:features/login.feature:13)\n"
+        ],
+        "browser": "firefox"
+      }
+    ]
+  },
+  {
     "runId": "22847563648",
     "runNumber": "20",
     "branch": "main",
