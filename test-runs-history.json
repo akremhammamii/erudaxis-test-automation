@@ -1,5 +1,113 @@
 [
   {
+    "runId": "22838072458",
+    "runNumber": "17",
+    "branch": "main",
+    "browser": "chrome, firefox",
+    "date": "2026-03-09T04:16:41.846Z",
+    "reportUrl": "https://akremhammamii.github.io/erudaxis-test-automation/",
+    "tests": [
+      {
+        "title": "Project Management :: Scenario",
+        "status": "passed",
+        "duration": 7999,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Search for a project by title",
+        "status": "passed",
+        "duration": 1169,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "passed",
+        "duration": 7565,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Filter projects by responsable",
+        "status": "passed",
+        "duration": 1689,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "passed",
+        "duration": 7379,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Create a new project",
+        "status": "passed",
+        "duration": 5994,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "User Authentication :: Successful login with valid credentials",
+        "status": "passed",
+        "duration": 5643,
+        "errors": [],
+        "browser": "chrome"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "passed",
+        "duration": 8536,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Search for a project by title",
+        "status": "passed",
+        "duration": 968,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "passed",
+        "duration": 8057,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Filter projects by responsable",
+        "status": "passed",
+        "duration": 1085,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "status": "passed",
+        "duration": 7654,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "Project Management :: Create a new project",
+        "status": "passed",
+        "duration": 5338,
+        "errors": [],
+        "browser": "firefox"
+      },
+      {
+        "title": "User Authentication :: Successful login with valid credentials",
+        "status": "passed",
+        "duration": 5041,
+        "errors": [],
+        "browser": "firefox"
+      }
+    ]
+  },
+  {
     "runId": "22813577685",
     "runNumber": "16",
     "branch": "main",
