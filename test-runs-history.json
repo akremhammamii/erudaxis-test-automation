@@ -1,5 +1,214 @@
 [
   {
+    "runId": "22850570321",
+    "runNumber": "26",
+    "branch": "main",
+    "browser": "chrome, firefox",
+    "date": "2026-03-09T11:10:08.311Z",
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "total": 14,
+    "duration": 70396,
+    "rate": 100,
+    "status": "PASS",
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/22850570321",
+    "tests": [
+      {
+        "title": "Project Management :: Scenario",
+        "suite": "Project Management",
+        "scenario": "Scenario",
+        "file": "listOfProjects.feature",
+        "browser": "chrome",
+        "status": "passed",
+        "duration": 7514,
+        "tags": [],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Search for a project by title",
+        "suite": "Project Management",
+        "scenario": "Search for a project by title",
+        "file": "listOfProjects.feature",
+        "browser": "chrome",
+        "status": "passed",
+        "duration": 1139,
+        "tags": [
+          "@projects",
+          "@search",
+          "@smoke"
+        ],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "suite": "Project Management",
+        "scenario": "Scenario",
+        "file": "listOfProjects.feature",
+        "browser": "chrome",
+        "status": "passed",
+        "duration": 6537,
+        "tags": [],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Filter projects by responsable",
+        "suite": "Project Management",
+        "scenario": "Filter projects by responsable",
+        "file": "listOfProjects.feature",
+        "browser": "chrome",
+        "status": "passed",
+        "duration": 1635,
+        "tags": [
+          "@projects",
+          "@filter",
+          "@smoke"
+        ],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "suite": "Project Management",
+        "scenario": "Scenario",
+        "file": "listOfProjects.feature",
+        "browser": "chrome",
+        "status": "passed",
+        "duration": 7154,
+        "tags": [],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Create a new project",
+        "suite": "Project Management",
+        "scenario": "Create a new project",
+        "file": "listOfProjects.feature",
+        "browser": "chrome",
+        "status": "passed",
+        "duration": 5808,
+        "tags": [
+          "@projects",
+          "@projects",
+          "@create",
+          "@smoke",
+          "@critical",
+          "@wip"
+        ],
+        "errors": []
+      },
+      {
+        "title": "User Authentication :: Successful login with valid credentials",
+        "suite": "User Authentication",
+        "scenario": "Successful login with valid credentials",
+        "file": "login.feature",
+        "browser": "chrome",
+        "status": "passed",
+        "duration": 4555,
+        "tags": [
+          "@authentication",
+          "@login_success",
+          "@smoke"
+        ],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "suite": "Project Management",
+        "scenario": "Scenario",
+        "file": "listOfProjects.feature",
+        "browser": "firefox",
+        "status": "passed",
+        "duration": 7783,
+        "tags": [],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Search for a project by title",
+        "suite": "Project Management",
+        "scenario": "Search for a project by title",
+        "file": "listOfProjects.feature",
+        "browser": "firefox",
+        "status": "passed",
+        "duration": 1064,
+        "tags": [
+          "@projects",
+          "@search",
+          "@smoke"
+        ],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "suite": "Project Management",
+        "scenario": "Scenario",
+        "file": "listOfProjects.feature",
+        "browser": "firefox",
+        "status": "passed",
+        "duration": 7775,
+        "tags": [],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Filter projects by responsable",
+        "suite": "Project Management",
+        "scenario": "Filter projects by responsable",
+        "file": "listOfProjects.feature",
+        "browser": "firefox",
+        "status": "passed",
+        "duration": 1121,
+        "tags": [
+          "@projects",
+          "@filter",
+          "@smoke"
+        ],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Scenario",
+        "suite": "Project Management",
+        "scenario": "Scenario",
+        "file": "listOfProjects.feature",
+        "browser": "firefox",
+        "status": "passed",
+        "duration": 7696,
+        "tags": [],
+        "errors": []
+      },
+      {
+        "title": "Project Management :: Create a new project",
+        "suite": "Project Management",
+        "scenario": "Create a new project",
+        "file": "listOfProjects.feature",
+        "browser": "firefox",
+        "status": "passed",
+        "duration": 5500,
+        "tags": [
+          "@projects",
+          "@projects",
+          "@create",
+          "@smoke",
+          "@critical",
+          "@wip"
+        ],
+        "errors": []
+      },
+      {
+        "title": "User Authentication :: Successful login with valid credentials",
+        "suite": "User Authentication",
+        "scenario": "Successful login with valid credentials",
+        "file": "login.feature",
+        "browser": "firefox",
+        "status": "passed",
+        "duration": 5115,
+        "tags": [
+          "@authentication",
+          "@login_success",
+          "@smoke"
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
     "runId": "22849597552",
     "runNumber": "25",
     "branch": "main",
