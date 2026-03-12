@@ -1,5 +1,20 @@
 [
   {
+    "runId": "23004327659",
+    "runNumber": "28",
+    "branch": "main",
+    "browser": "chrome, firefox",
+    "date": "2026-03-12T13:31:42.378Z",
+    "passed": 14,
+    "failed": 0,
+    "flaky": 0,
+    "total": 14,
+    "duration": 71886,
+    "rate": 100,
+    "status": "PASS",
+    "reportUrl": "https://github.com/akremhammamii/erudaxis-test-automation/actions/runs/23004327659"
+  },
+  {
     "runId": "22852079049",
     "runNumber": "27",
     "branch": "main",
